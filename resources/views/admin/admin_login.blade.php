@@ -33,8 +33,18 @@
                     </button>
                 </div>
                 @endif
+
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 <div class="input-group mb-3">
-                    <input name="email" id="email" type="email" class="form-control" placeholder="Email">
+                    <input name="email" id="email" type="text" class="form-control" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
