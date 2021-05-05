@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Reference;
 use Session;
 
 
@@ -91,5 +92,32 @@ class AdminController extends Controller
             }
             return redirect()->back();
         }
+    }
+
+    public function updateAdminDetails(Request $request)
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            $rules = [
+                'admin_name' => 'required|regex:/^[\pL\s\-]+$/U',
+                'admin_mobile' => 'required|numeric',
+            ];
+            $customMessages = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.alpha' => 'Valid Name is required',
+                'admin_mobile.required' => 'Mobile is required',
+                'admin_name.numeric' => 'Valid Mobile is required',
+
+            ];
+            $this->validate($request,$rules,$customMessages);
+            //Update Admin Details
+
+            Admin::where('email',Auth::guard('admin')->user()->email)
+                ->update(['name'=>$data['admin_name'],'mobile'=>$data['admin_mobile']]);
+            Session::flash('success_message',' Admin details updated successfully!');
+            return redirect()->back();
+        }
+        return view('admin.update_admin_details');
     }
 }
