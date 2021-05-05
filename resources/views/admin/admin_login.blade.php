@@ -24,7 +24,6 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
-            <form action="{{url('/admin')}}" method="post">@csrf
                 @if(Session::has('error_message'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{Session::get('error_message')}}
@@ -33,7 +32,6 @@
                     </button>
                 </div>
                 @endif
-
                 @if($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -43,6 +41,7 @@
                         </ul>
                     </div>
                     @endif
+            <form action="{{url('/admin')}}" method="post">@csrf
                 <div class="input-group mb-3">
                     <input name="email" id="email" type="text" class="form-control" placeholder="Email">
                     <div class="input-group-append">

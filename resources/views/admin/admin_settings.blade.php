@@ -32,15 +32,31 @@
                                 <h3 class="card-title">Update Password</h3>
                             </div>
                             <!-- /.card-header -->
+                            @if(Session::has('error_message'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                    {{Session::get('error_message')}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                        @endif
+                            @if(Session::has('success_message'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{Session::get('success_message')}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                        @endif
                             <!-- form start -->
-                            <form role="form" method="post" action="{{url('/admin/update-pwd')}}" name="updatePasswordForm"
+                            <form role="form" method="post" action="{{url('/admin/update-current-pwd')}}" name="updatePasswordForm"
                                   id="updatePasswordForm" >@csrf
                                 <div class="card-body">
-                                    <div class="form-group">
+                                <?php /*<div class="form-group">
                                         <label for="exampleInputEmail1">Admin Name</label>
                                         <input  type="text" class="form-control" value="{{$adminDetails->name}}"
                                                placeholder="Enter Admin\ Sub Admin Name" readonly="" id="admin_name" name="admin_name">
-                                    </div>
+                                    </div>*/?>
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Admin Email</label>
@@ -59,11 +75,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">New Password</label>
-                                        <input type="password" class="form-control" name="new_pwd" id="new_pwd" placeholder="New Password">
+                                        <input type="password" class="form-control" name="new_pwd" id="new_pwd" placeholder="New Password" required="">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Confirm Password</label>
-                                        <input type="password" class="form-control" name="confirm_pwd" id="confirm_pwd" placeholder="Confirm Password">
+                                        <input type="password" class="form-control" name="confirm_pwd" id="confirm_pwd" placeholder="Confirm Password" required="">
                                     </div>
 
                                 </div>
