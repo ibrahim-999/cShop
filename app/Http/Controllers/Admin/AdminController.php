@@ -112,7 +112,7 @@ class AdminController extends Controller
             ];
             $customMessages = [
                 'admin_name.required' => 'Name is required',
-                'admin_name.alpha' => 'Valid Name is required',
+                'admin_name.regex' => 'Valid Name is required',
                 'admin_mobile.required' => 'Mobile is required',
                 'admin_name.numeric' => 'Valid Mobile is required',
                 'admin_image.image' => 'Valid image is required',
