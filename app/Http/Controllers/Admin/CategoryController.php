@@ -170,7 +170,7 @@ class CategoryController extends Controller
      {
          //Delete Category
          Category::where('id',$id)->delete();
-         $message = 'Category image has been deleted!';
+         $message = 'Category has been deleted!';
          session()->flash('success_message',$message);
          return redirect()->back();
      }
