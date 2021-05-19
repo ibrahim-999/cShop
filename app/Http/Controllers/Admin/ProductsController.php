@@ -79,19 +79,55 @@ class ProductsController extends Controller
             if (!empty($data['is_featured']))
             {
                 $is_featured = 0;
-            }
-            else {
+            } else {
                 $is_featured = 1 ;
             }
+
+            if(empty($data['fabric']))
+            {
+                $data['fabric'] = "";
+            }
+            if(empty($data['sleeve']))
+            {
+                $data['sleeve'] = "";
+            }
+            if(empty($data['description']))
+            {
+                $data['description'] = "";
+            }
+            if(empty($data['meta_title']))
+            {
+                $data['meta_title'] = "";
+            }
+            if(empty($data['meta_description']))
+            {
+                $data['meta_description'] = "";
+            }
+            if(empty($data['meta_keywords']))
+            {
+                $data['{meta_keywords}'] = "";
+            }
+            if(empty($data['product_video']))
+            {
+                $data['product_video'] = "";
+            }
+            if(empty($data['main_image']))
+            {
+                $data['main_image'] = "";
+            }
+
             $categoriesDetails = Category::find($data['category_id']);
             $product->section_id = $categoriesDetails['section_id'];
             $product->category_id = $data['category_id'];
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
             $product->product_color = $data['product_color'];
+            $product->product_price = $data['product_price'];
             $product->product_discount = $data['product_discount'];
             $product->product_weight = $data['product_weight'];
             $product->description = $data['description'];
+            $product->product_video = $data['product_video'];
+            $product->main_image = $data['main_image'];
             $product->wash_care = $data['wash_care'];
             $product->fabric = $data['fabric'];
             $product->pattern = $data['pattern'];
@@ -100,14 +136,13 @@ class ProductsController extends Controller
             $product->occasion = $data['occasion'];
             $product->meta_title = $data['meta_title'];
             $product->meta_keywords = $data['meta_keywords'];
-            $product->meta-description = $data['meta-description'];
+            $product->meta_description = $data['meta_description'];
+            $product->meta_description = $data['meta_description'];
             $product->is_featured = $is_featured;
+            $product->status = 1;
             $product->save();
-            session::flash('success_message',' Product has been added successfully!')
+            session::flash('success_message',' Product has been added successfully!');
             return redirect('admin/products');
-
-
-
 
         }
 
