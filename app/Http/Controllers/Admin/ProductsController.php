@@ -83,38 +83,15 @@ class ProductsController extends Controller
                 $is_featured = 1 ;
             }
 
+            if(empty($data['product_weight']))
+            {
+                $data['product_weight'] = "";
+            }
             if(empty($data['fabric']))
             {
                 $data['fabric'] = "";
             }
-            if(empty($data['sleeve']))
-            {
-                $data['sleeve'] = "";
-            }
-            if(empty($data['description']))
-            {
-                $data['description'] = "";
-            }
-            if(empty($data['meta_title']))
-            {
-                $data['meta_title'] = "";
-            }
-            if(empty($data['meta_description']))
-            {
-                $data['meta_description'] = "";
-            }
-            if(empty($data['meta_keywords']))
-            {
-                $data['{meta_keywords}'] = "";
-            }
-            if(empty($data['product_video']))
-            {
-                $data['product_video'] = "";
-            }
-            if(empty($data['main_image']))
-            {
-                $data['main_image'] = "";
-            }
+
 
             $categoriesDetails = Category::find($data['category_id']);
             $product->section_id = $categoriesDetails['section_id'];
@@ -126,8 +103,6 @@ class ProductsController extends Controller
             $product->product_discount = $data['product_discount'];
             $product->product_weight = $data['product_weight'];
             $product->description = $data['description'];
-            $product->product_video = $data['product_video'];
-            $product->main_image = $data['main_image'];
             $product->wash_care = $data['wash_care'];
             $product->fabric = $data['fabric'];
             $product->pattern = $data['pattern'];
