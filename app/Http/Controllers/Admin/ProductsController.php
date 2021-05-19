@@ -76,11 +76,11 @@ class ProductsController extends Controller
             $this->validate($request,$rules,$customMessages);
             // Save Product Details
 
-            if (!empty($data['is_featured']))
+            if (empty($data['is_featured']))
             {
-                $is_featured = 0;
+                $is_featured = "No";
             } else {
-                $is_featured = 1 ;
+                $is_featured = "YES" ;
             }
 
             if(empty($data['product_weight']))
@@ -111,7 +111,6 @@ class ProductsController extends Controller
             $product->occasion = $data['occasion'];
             $product->meta_title = $data['meta_title'];
             $product->meta_keywords = $data['meta_keywords'];
-            $product->meta_description = $data['meta_description'];
             $product->meta_description = $data['meta_description'];
             $product->is_featured = $is_featured;
             $product->status = 1;
