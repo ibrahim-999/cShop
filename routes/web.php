@@ -48,5 +48,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('update-product-status','ProductsController@updateProductStatus');
         Route::match(['get','post'],'add-edit-product/{id?}','ProductsController@addEditProduct');
         Route::get('delete-product/{id}','ProductsController@deleteProduct');
+        Route::get('delete-product-image/{id}','ProductsController@deleteProductImage');
+        Route::get('delete-product-video/{id}','ProductsController@deleteProductVideo');
     });
 });

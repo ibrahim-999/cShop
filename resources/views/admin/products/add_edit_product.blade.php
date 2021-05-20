@@ -108,6 +108,7 @@
                                         <label for="product_weight">Product Weight</label>
                                         <input type="text" class="form-control" name="product_weight" id="product_weight" placeholder="Enter Discount" @if(!empty($productdata['product_weight']))value="{{$productdata['product_weight']}}" @else value="{{old('product_weight')}}" @endif>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="main_image">Product Main Image</label>
                                         <div class="input-group">
@@ -120,6 +121,10 @@
                                             </div>
                                         </div>
                                         <div>Recommended Image Size: Width:1040px, Height:1200px</div>
+                                        @if(!empty($productdata['main_image']))
+                                            <div><img style="width:80px; margin-top: 5px;" src="{{asset('images/product_images/small/'.$productdata['main_image'])}}">&nbsp;<a class="confirmDelete" href="javascript:void(0)" record="product-image" recordid="{{$productdata['id']}}" >Delete Image</a></div>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +140,16 @@
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
+
                                         </div>
+                                        @if(!empty($productdata['product_video']))
+                                            <div><a href="{{url('videos/product_videos/'.$productdata['product_video'])}} download">Download</a>
+                                                &nbsp;|&nbsp;
+                                                <a class="confirmDelete" href="javascript:void(0)"
+                                                   record="product-video" recordid="{{$productdata['id']}}"
+                                                >Delete Video</a>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Product Description</label>
