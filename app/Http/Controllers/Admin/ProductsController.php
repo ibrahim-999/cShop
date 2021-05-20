@@ -46,11 +46,17 @@ class ProductsController extends Controller
         {
             $title = "Add Product";
             $product = new  Product();
+            $productdata = array();
+            $message = "Product has been added successfully!";
             //Add Product
         }
         else
         {
             $title = "Edit Product";
+            $productdata = Product::find($id);
+            $productdata = json_decode(json_encode($productdata),true);
+            $product = Product::find($id);
+            $message = "Product has been updated successfully!";
             //Edit Product
         }
         if ($request->isMethod('post'))
@@ -88,10 +94,7 @@ class ProductsController extends Controller
             {
                 $data['product_weight'] = "";
             }
-            if(empty($data['fabric']))
-            {
-                $data['fabric'] = "";
-            }
+
             //Upload Product image
             if($request->hasFile('main_image'))
             {
@@ -150,7 +153,7 @@ class ProductsController extends Controller
             $product->product_weight = $data['product_weight'];
             $product->description = $data['description'];
             $product->wash_care = $data['wash_care'];
-            $product->fabric = $data['fabric'];
+            //$product->fabric = $data['fabric'];
             $product->pattern = $data['pattern'];
             $product->sleeve = $data['sleeve'];
             $product->fit = $data['fit'];
@@ -161,14 +164,14 @@ class ProductsController extends Controller
             $product->is_featured = $is_featured;
             $product->status = 1;
             $product->save();
-            session::flash('success_message',' Product has been added successfully!');
+            session::flash('success_message',$message);
             return redirect('admin/products');
 
         }
 
         //
         // Filter Arrays
-        $fabricArray = array('Cotton','Polyester','Wool');
+        //$fabricArray = array('Cotton','Polyester','Wool');
         $sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
         $patternArray = array('Checked','Plain','Printed','Self','Solid');
         $fitArray = array('Regular','Slim');
@@ -178,7 +181,7 @@ class ProductsController extends Controller
         $categories = Section::with('Categories')->get();
         $categories = json_decode(json_encode($categories),true);
 /*        echo "<pre>"; print_r($categories); die;*/
-        return view ('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories'));
+        return view ('admin.products.add_edit_product')->with(compact('title','sleeveArray','patternArray','fitArray','occasionArray','categories','productdata'));
     }
 
     public function deleteProduct($id)
