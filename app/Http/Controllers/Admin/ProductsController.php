@@ -105,9 +105,9 @@ class ProductsController extends Controller
                     // Generate new image name
                     $imageName = $image_name.'.'.rand(111,99999).'.'.$extension;
                     //Set path for every size
-                    $large_image_path = 'images/product_images/large'.$imageName;
-                    $medium_image_path = 'images/product_images/medium'.$imageName;
-                    $small_image_path = 'images/product_images/small'.$imageName;
+                    $large_image_path = 'images/product_images/large/'.$imageName;
+                    $medium_image_path = 'images/product_images/medium/'.$imageName;
+                    $small_image_path = 'images/product_images/small/'.$imageName;
                     //Upload large image
                     Image::make($image_tmp)->save($large_image_path);
                     //Upload medium and small images
