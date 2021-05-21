@@ -291,7 +291,8 @@ class ProductsController extends Controller
             return redirect()->back();
         }
 
-        $productdata = Product::find($id);
+        $productdata = Product::select('id','product_name','product_code','product_color','main_image')
+            ->with('attributes')->find($id);
         $productdata = json_decode(json_encode($productdata),true);
         $title = "Product Attributes";
         return view('admin.products.add_attributes')->with(compact('productdata','title'));
