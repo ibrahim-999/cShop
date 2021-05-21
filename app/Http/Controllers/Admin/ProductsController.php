@@ -41,6 +41,21 @@ class ProductsController extends Controller
             return response()->json(['status'=>$status,'product_id'=>$data['product_id']]);
         }
     }
+    public function updateAttributeStatus(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+
+            if($data['status']=="Active")
+            {
+                $status = 0;
+            }else{
+                $status= 1;
+            }
+            ProductsAttribute::where('id',$data['attribute_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status,'attribute_id'=>$data['attribute_id']]);
+        }
+    }
     public function addEditProduct( Request $request, $id=null)
     {
         if($id=="")
@@ -251,6 +266,15 @@ class ProductsController extends Controller
         return redirect()->back();
     }
 
+    public function deleteAttribute($id)
+    {
+        //Delete Product
+        ProductsAttribute::where('id',$id)->delete();
+        $message = 'Attribute has been deleted!';
+        session()->flash('success_message',$message);
+        return redirect()->back();
+    }
+
     public function addAttributes(Request $request, $id)
     {
         if($request->isMethod('post'))
@@ -283,6 +307,7 @@ class ProductsController extends Controller
                     $attributes->size = $data['size'][$key];
                     $attributes->price = $data['price'][$key];
                     $attributes->stock = $data['stock'][$key];
+                    $attributes->status = 1;
                     $attributes->save();
                 }
             }

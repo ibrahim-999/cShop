@@ -100,7 +100,7 @@ $(document).ready(function (){
         });
     });
 
-    //Update Category Status
+    //Update Product Status
     $(".updateProductStatus").click(function (){
         var status =$(this).text();
         var product_id = $(this).attr("product_id");
@@ -121,7 +121,30 @@ $(document).ready(function (){
             }
         });
     });
-// Product Attributes Add/Remove Script
+    //Update Attribute Status
+    $(".updateAttributeStatus").click(function (){
+        var status =$(this).text();
+        var attribute_id = $(this).attr("attribute_id");
+        $.ajax({
+            type:'post',
+            url:'/admin/update-attribute-status',
+            data:{status:status,attribute_id:attribute_id},
+            success:function (resp){
+                if(resp['status']==0)
+                {
+                    $("#attribute-"+attribute_id).html("Inactive");
+                }else if(resp['status']==1)
+                {
+                    $("#attribute-"+attribute_id).html("Active");
+                }
+            },error:function (){
+                alert("Error");
+            }
+        });
+    });
+
+
+    // Product Attributes Add/Remove Script
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
