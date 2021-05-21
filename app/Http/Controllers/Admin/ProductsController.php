@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductsAttribute;
 use App\Section;
 use Illuminate\Http\Request;
 use Session;
@@ -248,6 +249,54 @@ class ProductsController extends Controller
         $message = 'Product has been deleted!';
         session()->flash('success_message',$message);
         return redirect()->back();
+    }
+
+    public function addAttributes(Request $request, $id)
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            /*echo "<pre>"; print_r($data); die;*/
+            foreach ($data['sku'] as $key => $value)
+            {
+                if(!empty($value))
+                {
+                    // SKU already exists validation
+                    $attrCountSKU = ProductsAttribute::where('sku',$value)->count();
+                    if($attrCountSKU>0)
+                    {
+                        $message ='SKU Already Exists. Please add another SKU';
+                        session()->flash('error_message',$message);
+                        return redirect()->back();
+                    }
+                    // Size already exists validation
+                    $attrCountSize = ProductsAttribute::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
+                    if($attrCountSize>0)
+                    {
+                        $message ='Size Already Exists. Please add another Size';
+                        session()->flash('error_message',$message);
+                        return redirect()->back();
+                    }
+                    $attributes = new ProductsAttribute;
+                    $attributes->product_id = $id;
+                    $attributes->sku = $value;
+                    $attributes->size = $data['size'][$key];
+                    $attributes->price = $data['price'][$key];
+                    $attributes->stock = $data['stock'][$key];
+                    $attributes->save();
+                }
+            }
+            $message = 'Product Attributes have been added successfully!';
+            session()->flash('success_message',$message);
+            return redirect()->back();
+        }
+
+        $productdata = Product::find($id);
+        $productdata = json_decode(json_encode($productdata),true);
+        $title = "Product Attributes";
+        return view('admin.products.add_attributes')->with(compact('productdata','title'));
+
+
     }
 
 }
