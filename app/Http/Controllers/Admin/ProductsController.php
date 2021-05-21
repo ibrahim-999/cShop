@@ -286,7 +286,7 @@ class ProductsController extends Controller
                     $attributes->save();
                 }
             }
-            $message = 'Product Attributes have been added successfully!';
+            $message = 'Product attributes have been added successfully!';
             session()->flash('success_message',$message);
             return redirect()->back();
         }
@@ -296,8 +296,25 @@ class ProductsController extends Controller
         $productdata = json_decode(json_encode($productdata),true);
         $title = "Product Attributes";
         return view('admin.products.add_attributes')->with(compact('productdata','title'));
+    }
+    public function editAttributes(Request $request, $id)
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            foreach( $data['attrId'] as $key => $attr)
+            {
+                if(!empty($attr))
+                {
+                    ProductsAttribute::where(['id'=>$data['attrId'][$key]])->update(['price'=>$data['price'][$key],
+                        'stock'=>$data['stock'][$key]]);
+                }
+            }
+            $message = 'Product attributes have been updated successfully!';
+            session()->flash('success_message',$message);
+            return redirect()->back();
 
-
+        }
     }
 
 }
