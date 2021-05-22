@@ -192,13 +192,15 @@
                                         <label for="wash_care">Wash Care</label>
                                         <textarea class="form-control" id="wash_care" name="wash_care" rows="3">@if(!empty($productdata['wash_care'])){{$productdata['wash_care']}}@else {{old('wash_care')}} @endif</textarea>
                                     </div>
-<!--                                    <div class="form-group">
+                                        <div class="form-group">
                                         <label>Select Fabric</label>
-                                        <select name="fabrci" id="fabrci" class="form-control select2" style="width: 100%;">
+                                        <select name="fabric" id="fabric" class="form-control select2" style="width: 100%;">
                                             <option value="">Select</option>
-
+                                            @foreach($fabricArray as $fabric)
+                                                <option value="{{$fabric}}" @if(!empty($productdata['fabric']) && $productdata['fabric']== $fabric) selected ="" @endif>{{$fabric}}</option>
+                                            @endforeach
                                         </select>
-                                    </div>-->
+                                        </div>
                                         <div class="form-group">
                                             <label>Select Fit</label>
                                             <select name="fit" id="fit" class="form-control select2" style="width: 100%;">

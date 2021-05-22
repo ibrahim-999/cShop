@@ -80,8 +80,10 @@
                                                     <a class="updateProductStatus" id="product-{{$product->id}}" product_id="{{$product->id}}" href="javascript:void(0)">Inactive</a>
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td style="width:120px; ">
                                                 <a title="Add/Edit Attributes" href="{{url('admin/add-attributes/'.$product->id)}}"><i class="fas fa-plus"></i></a>
+                                                &nbsp;&nbsp;
+                                                <a title="Add Images" href="{{url('admin/add-images/'.$product->id)}}"><i class="fas fa-plus-circle"></i></a>
                                                 &nbsp;&nbsp;
                                                 <a title="Edit Product" href="{{url('admin/add-edit-product/'.$product->id)}}"><i class="fas fa-edit"></i></a>
                                                 &nbsp;&nbsp;

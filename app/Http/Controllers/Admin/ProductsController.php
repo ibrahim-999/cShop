@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductsAttribute;
+use App\ProductsImage;
 use App\Section;
 use Illuminate\Http\Request;
 use Session;
@@ -56,6 +57,21 @@ class ProductsController extends Controller
             return response()->json(['status'=>$status,'attribute_id'=>$data['attribute_id']]);
         }
     }
+    public function updateImageStatus(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+
+            if($data['status']=="Active")
+            {
+                $status = 0;
+            }else{
+                $status= 1;
+            }
+            ProductsImage::where('id',$data['image_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status,'image_id'=>$data['image_id']]);
+        }
+    }
     public function addEditProduct( Request $request, $id=null)
     {
         if($id=="")
@@ -98,18 +114,6 @@ class ProductsController extends Controller
             ];
             $this->validate($request,$rules,$customMessages);
             // Save Product Details
-
-            if (empty($data['is_featured']))
-            {
-                $is_featured = "No";
-            } else {
-                $is_featured = "YES" ;
-            }
-
-            if(empty($data['product_weight']))
-            {
-                $data['product_weight'] = "";
-            }
 
             //Upload Product image
             if($request->hasFile('main_image'))
@@ -169,7 +173,7 @@ class ProductsController extends Controller
             $product->product_weight = $data['product_weight'];
             $product->description = $data['description'];
             $product->wash_care = $data['wash_care'];
-            //$product->fabric = $data['fabric'];
+            $product->fabric = $data['fabric'];
             $product->pattern = $data['pattern'];
             $product->sleeve = $data['sleeve'];
             $product->fit = $data['fit'];
@@ -177,7 +181,10 @@ class ProductsController extends Controller
             $product->meta_title = $data['meta_title'];
             $product->meta_keywords = $data['meta_keywords'];
             $product->meta_description = $data['meta_description'];
-            $product->is_featured = $is_featured;
+            if(!empty($data['is_featured'])){
+                $product->is_featured = $data['is_featured'];
+            }
+
             $product->status = 1;
             $product->save();
             session::flash('success_message',$message);
@@ -187,7 +194,7 @@ class ProductsController extends Controller
 
         //
         // Filter Arrays
-        //$fabricArray = array('Cotton','Polyester','Wool');
+        $fabricArray = array('Cotton','Polyester','Wool');
         $sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
         $patternArray = array('Checked','Plain','Printed','Self','Solid');
         $fitArray = array('Regular','Slim');
@@ -197,7 +204,7 @@ class ProductsController extends Controller
         $categories = Section::with('Categories')->get();
         $categories = json_decode(json_encode($categories),true);
 /*        echo "<pre>"; print_r($categories); die;*/
-        return view ('admin.products.add_edit_product')->with(compact('title','sleeveArray','patternArray','fitArray','occasionArray','categories','productdata'));
+        return view ('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','productdata'));
     }
     public function deleteProductImage($id)
     {
@@ -231,6 +238,43 @@ class ProductsController extends Controller
         session()->flash('success_message',$message);
         return redirect()->back();
     }
+
+
+
+    public function deleteImage($id)
+    {
+        $product_image = ProductsImage::select('image')->where('id',$id)->first();
+
+        //Get Product Image Path
+        $small_image_path = 'images/product_images/small/';
+        $medium_image_path = 'images/product_images/medium/';
+        $large_image_path = 'images/product_images/large/';
+
+        // Delete Product Image form category_images folder if exits
+
+        if(file_exists($small_image_path.$product_image->image))
+        {
+            unlink($small_image_path.$product_image->image);
+        }
+        if(file_exists($medium_image_path.$product_image->image))
+        {
+            unlink($medium_image_path.$product_image->image);
+        }
+        if(file_exists($large_image_path.$product_image->image))
+        {
+            unlink($large_image_path.$product_image->image);
+        }
+
+        //Delete Product Image from product_images the table
+
+        ProductsImage::where('id',$id)->delete();
+
+        $message = 'Product images has been deleted!';
+        session()->flash('success_message',$message);
+        return redirect()->back();
+    }
+
+
 
     public function deleteProductVideo($id)
     {
@@ -341,5 +385,51 @@ class ProductsController extends Controller
 
         }
     }
+
+    public function addImages(Request $request,$id)
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            if($request->hasFile('images'))
+            {
+                $images = $request->file('images');
+
+                foreach ($images as $key => $image)
+                {
+                    $productImage = new ProductsImage();
+                    $image_tmp = Image::make($image);
+                    $originalName = $image->getClientOriginalName();
+                    $extension = $image->getClientOriginalExtension();
+                    $imageName = rand(111,99999).time().".".$extension;
+                    //Set path for every size
+                    $large_image_path = 'images/product_images/large/'.$imageName;
+                    $medium_image_path = 'images/product_images/medium/'.$imageName;
+                    $small_image_path = 'images/product_images/small/'.$imageName;
+                    //Upload large image
+                    Image::make($image_tmp)->save($large_image_path);
+                    //Upload medium and small images
+                    Image::make($image_tmp)->resize(520,600)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(250,300)->save($small_image_path);
+                    //Save image in the product table
+                    $productImage->image = $imageName;
+                    $productImage->product_id = $id;
+                    $productImage->save();
+
+                }
+                $message = 'Product images have been added successfully!';
+                session()->flash('success_message',$message);
+                return redirect()->back();
+            }
+        }
+        $productdata = Product::with('images')->select('id','product_name','product_code','product_color','main_image')
+            ->find($id);
+        $productdata = json_decode(json_encode($productdata),true);
+        $title = 'Product Images';
+
+        return view('admin.products.add_image')->with(compact('title','productdata'));
+
+    }
+
 
 }
