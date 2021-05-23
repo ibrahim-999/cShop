@@ -1,6 +1,5 @@
 @extends('layouts.admin_layout.admin_layout')
 @section('content')
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -13,7 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Categories</li>
+                            <li class="breadcrumb-item active">Brands</li>
                         </ol>
                     </div>
                 </div>
@@ -34,50 +33,37 @@
                                 </button>
                             </div>
                         @endif
-
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Categories</h3>
-                                <a href="{{url('admin/add-edit-category')}}" style="max-width: 150px; float:right; display: inline-block"
-                                   class="btn btn-block btn-success">Add Category</a>
+                                <h3 class="card-title">Brands</h3>
+                                <a href="{{url('admin/add-edit-brand')}}" style="max-width: 150px; float:right; display: inline-block"
+                                   class="btn btn-block btn-success">Add Brand</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="categories" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Category</th>
-                                        <th>Parent Category</th>
-                                        <th>Section</th>
-                                        <th>URL</th>
-                                        <th>Status</th>
+                                        <th>Name</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($categories as $category)
-                                        @if(!isset($category->parentcategory->category_name))
-                                            <?php $parent_category ="Root";  ?>
-                                            @else
-                                            <?php $parent_category = $category->parentcategory->category_name; ?>
-                                        @endif
+                                    @foreach($brands as $brand)
                                         <tr>
-                                            <td>{{$category->id}}</td>
-                                            <td>{{$category->category_name}}</td>
-                                            <td>{{$parent_category}}</td>
-                                            <td>{{$category->section->name}}</td>
-                                            <td>{{$category->url}}</td>
-                                            <td>@if($category->status==1)
-                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" category_id="{{$category->id}}" href="javascript:void(0)"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
-                                                @else
-                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" category_id="{{$category->id}}" href="javascript:void(0)"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
-                                                @endif
-                                            </td>
-                                            <td><a href="{{url('admin/add-edit-category/'.$category->id)}}"><i class="fas fa-edit"></i></a>
+                                            <td>{{$brand->id}}</td>
+                                            <td>{{$brand->name}}</td>
+                                            <td>
+                                                <a title="Edit Brand" href="{{url('admin/add-edit-brand/'.$brand->id)}}"><i class="fas fa-edit"></i></a>
                                                 &nbsp;&nbsp;
-                                                <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{$category->id}}"
-                                                   <?php /*href="{{url('admin/delete-category/'.$category->id)}}"*/?>><i class="fas fa-trash"></i></a>
+                                                <a title="Delete Brand" href="javascript:void(0)" class="confirmDelete" record="brand" recordid="{{$brand->id}}"><i class="fas fa-trash"></i></a>
+                                                &nbsp;&nbsp;
+                                                @if($brand->status==1)
+                                                    <a class="updateBrandStatus" id="brand-{{$brand->id}}" brand_id="{{$brand->id}}" href="javascript:void(0)"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
+                                                @else
+                                                    <a class="updateBrandStatus" id="brand-{{$brand->id}}" brand_id="{{$brand->id}}" href="javascript:void(0)"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -96,5 +82,6 @@
         </section>
         <!-- /.content -->
     </div>
+
 
 @endsection

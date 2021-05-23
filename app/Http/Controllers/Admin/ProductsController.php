@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -97,7 +98,8 @@ class ProductsController extends Controller
             // Validation
             $rules = [
                 'category_id' => 'required',
-                'product_name' => 'required',
+                'brand_id' => 'required',
+                'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'product_code' => 'required',
                 'product_price' =>'required|numeric',
                 'product_color' => 'required',
@@ -105,7 +107,9 @@ class ProductsController extends Controller
             ];
             $customMessages = [
                 'category_id.required' => 'Category Name is required',
+                'brand_id.required' => 'Brand Name is required',
                 'product_name.required' => ' Name is required',
+                'product_name.regex'=>'Valid Product name is required',
                 'product_code.required' => 'Code  is required',
                 'product_price.required' => 'Price  is required',
                 'product_price.numeric' => 'Valid Price is required',
@@ -165,6 +169,7 @@ class ProductsController extends Controller
             $categoriesDetails = Category::find($data['category_id']);
             $product->section_id = $categoriesDetails['section_id'];
             $product->category_id = $data['category_id'];
+            $product->brand_id = $data['brand_id'];
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
             $product->product_color = $data['product_color'];
@@ -204,7 +209,14 @@ class ProductsController extends Controller
         $categories = Section::with('Categories')->get();
         $categories = json_decode(json_encode($categories),true);
 /*        echo "<pre>"; print_r($categories); die;*/
-        return view ('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','productdata'));
+
+        // Get All Brands
+        $brands = Brand::where('status',1)->get();
+        $brands = json_decode(json_encode($brands),true);
+
+        return view ('admin.products.add_edit_product')->with(compact('title','fabricArray',
+            'sleeveArray','patternArray',
+            'fitArray','occasionArray','categories','productdata','brands'));
     }
     public function deleteProductImage($id)
     {

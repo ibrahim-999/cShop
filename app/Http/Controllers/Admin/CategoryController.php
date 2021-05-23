@@ -65,7 +65,7 @@ class CategoryController extends Controller
             $data= $request->all();
             //Category Validation
             $rules = [
-                'category_name' => 'required',
+                'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'section_id' => 'required',
                 'url' =>'required',
                 'category_image' => 'image',
@@ -73,7 +73,7 @@ class CategoryController extends Controller
             ];
             $customMessages = [
                 'category_name.required' => 'Category Name is required',
-                //'category_name.regex' => 'Valid Name is required',
+                'category_name.regex' => 'Valid Name is required',
                 'section_id.required' => 'Section is required',
                 'url.required' =>'Category URL is required',
                 'category_image.image' => 'Valid Category Image is required',

@@ -68,10 +68,14 @@
                                             @foreach( $categories as $section)
                                                 <optgroup label="{{$section['name']}}"></optgroup>
                                                 @foreach($section['categories'] as $category)
-                                                    <option value="{{$category['id']}}"@if(!empty(@old('category_id')) && $category['id'] == @old('category_id'))
-                                                    @elseif(!empty($productdata['category_id']) && $productdata['category_id']==$category['id']) selected="" @endif>&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{$category['category_name']}}</option>
+                                                    <option value="{{$category['id']}}" @if(!empty(@old('category_id')) && $category['id'] ==
+                                                            @old('category_id')) selected="" @elseif(!empty($productdata['category_id']) && $productdata['category_id']== $category['id']) selected=""
+                                                        @endif>&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{$category['category_name']}}</option>
                                                     @foreach($category['subcategories'] as $subcategory)
-                                                        <option value="{{$subcategory['id']}}"@if(!empty(@old('category_id'))&& $subcategory['id']==@old('category_id')) @elseif(!empty($productdata['category_id']) && $productdata['category_id']==$subcategory['id']) selected="" @endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{$subcategory['category_name']}}</option>
+                                                        <option value="{{$subcategory['id']}}"
+                                                                @if(!empty(@old('category_id')) && $subcategory['id']== @old('category_id')) selected=""
+                                                        @elseif(!empty($productdata['category_id']) && $productdata['category_id']==$subcategory['id'])
+                                                                selected=""@endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{$subcategory['category_name']}}</option>
                                                     @endforeach
                                                 @endforeach
                                             @endforeach
@@ -191,6 +195,16 @@
                                     <div class="form-group">
                                         <label for="wash_care">Wash Care</label>
                                         <textarea class="form-control" id="wash_care" name="wash_care" rows="3">@if(!empty($productdata['wash_care'])){{$productdata['wash_care']}}@else {{old('wash_care')}} @endif</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select Brand</label>
+                                        <select name="brand_id" id="brand_id" class="form-control select2" style="width: 100%;">
+                                            <option value="">Select</option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand['id'] }}"
+                                                        @if(!empty($productdata['brand_id']) && $productdata['brand_id'] == $brand['id']) selected ="" @endif>{{$brand['name']}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                         <div class="form-group">
                                         <label>Select Fabric</label>
