@@ -1,3 +1,4 @@
+
 <div  id="footerSection">
 	<div class="container">
 		<div class="row">
@@ -21,7 +22,7 @@
 			</div>
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
-				<a href="https://www.facebook.com/groups"><img width="60" height="60" src="{{asset('images/front_images/facebook.png')}}" title="facebook" alt="facebook"/></a>
+				<a href="https://www.facebook.com"><img width="60" height="60" src="{{asset('images/front_images/facebook.png')}}" title="facebook" alt="facebook"/></a>
 				<a href="#"><img width="60" height="60" src="{{asset('images/front_images/twitter.png')}}" title="twitter" alt="twitter"/></a>
 				<a href="https://www.youtube.com"><img width="60" height="60" src="{{asset('images/front_images/youtube.png')}}" title="youtube" alt="youtube"/></a>
 			</div>

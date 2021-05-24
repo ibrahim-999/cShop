@@ -1,5 +1,6 @@
+
 <div id="sidebar" class="span3">
-				<div class="well well-small"><a id="myCart" href="product_summary.html"><img src="themes/images/ico-cart.png" alt="cart">3 Items in your cart</a></div>
+				<div class="well well-small"><a id="myCart" href="product_summary.html"><img src="{{asset('images/front_images/ico-cart.png')}}" alt="cart">3 Items in your cart</a></div>
 				<ul id="sideManu" class="nav nav-tabs nav-stacked">
 					<li class="subMenu"><a>MEN</a>
 						<ul>
@@ -40,7 +41,7 @@
 				</ul>
 				<br/>
 				<div class="thumbnail">
-					<img src="themes/images/payment_methods.png" title="Payment Methods" alt="Payments Methods">
+					<img src="{{asset('images/front_images/payment_methods.png')}}" title="Payment Methods" alt="Payments Methods">
 					<div class="caption">
 						<h5>Payment Methods</h5>
 					</div>
