@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Auth::routes();
 
@@ -70,4 +70,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('delete-brand/{id}','BrandController@deleteBrand');
 
     });
+});
+
+
+// Front Routes
+Route::namespace('Front')->group(function (){
+
+    Route::get('/','IndexController@index');
 });
