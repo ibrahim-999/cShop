@@ -2,7 +2,7 @@
 <div  id="footerSection">
 	<div class="container">
 		<div class="row">
-			<div class="span3">
+			<div class="span3" >
 				<h5>ACCOUNT</h5>
 				<a href="login.html">YOUR ACCOUNT</a>
 				<a href="login.html">PERSONAL INFORMATION</a>

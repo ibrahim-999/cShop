@@ -1,7 +1,7 @@
 
 <div id="header">
 	<div class="container">
-		<div id="welcomeLine" class="row">
+		<div id="welcomeLine" class="row" >
 			<div class="span6">Welcome!<strong> User</strong></div>
 			<div class="span6">
 				<div class="pull-right">

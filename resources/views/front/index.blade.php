@@ -22,7 +22,7 @@
 											<div class="thumbnail">
 												<i class="tag"></i>
 												<a href="product_details.html"><img src="{{asset('images/front_images/products/b2.jpg')}}" alt=""></a>
-												<div class="caption">
+												<div class="caption" >
 													<h5>Product name</h5>
 													<h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">Rs.1000</span></h4>
 												</div>
