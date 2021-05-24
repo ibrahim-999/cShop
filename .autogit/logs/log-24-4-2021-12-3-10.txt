@@ -1,0 +1,21 @@
+-------------------- Auto-Git Log --------------------
+		Mon May 24 2021 12:03:10 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app/Http/Controllers/Front/IndexController.php
+* public/css/front_css/base.css
+* public/css/front_css/font-awesome.css
+* resources/views/layouts/front_layout/front_footer.blade.php
+* resources/views/layouts/front_layout/front_header.blade.php
+* resources/views/layouts/front_layout/front_sidebar.blade.php
+
+
+Created files:
+* .autogit/logs/log-24-4-2021-11-32-27.txt
+
+
+Deleted files:
+
+
+Renamed files:
