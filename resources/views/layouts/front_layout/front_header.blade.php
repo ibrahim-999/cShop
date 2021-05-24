@@ -28,7 +28,7 @@ $sections = Section::sections();
 		          <ul class="nav">
 		            <li class="active"><a href="#">Home</a></li>
 		            @foreach($sections as $section)
-                        @if(count($section['categories'])> 0)
+                        @if(count($section['categories'])> 0 )
                           <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$section['name']}} <b class="caret"></b></a>
                           <ul class="dropdown-menu">
