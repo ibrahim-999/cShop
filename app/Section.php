@@ -13,7 +13,7 @@ class Section extends Model
         $getSections = json_decode(json_encode($getSections),true);
         //echo "<pre>"; print_r($getSections); die;
         return $getSections;
-        
+
     }
     public function categories()
     {
