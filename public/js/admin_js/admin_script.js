@@ -24,7 +24,7 @@ $(document).ready(function (){
     });
 
     //Update Section Status
-    $(".updateSectionStatus").click(function (){
+    $(document).on("click",".updateSectionStatus",function (){
         var status =$(this).children("i").attr("status");
        var section_id = $(this).attr("section_id");
        $.ajax({
@@ -47,7 +47,7 @@ $(document).ready(function (){
 
 
     //Update Brand Status
-    $(".updateBrandStatus").click(function (){
+    $(document).on("click",".updateBrandStatus",function (){
         var status =$(this).children("i").attr("status");
         var brand_id = $(this).attr("brand_id");
         $.ajax({
@@ -72,7 +72,7 @@ $(document).ready(function (){
 
 
     //Update Category Status
-    $(".updateCategoryStatus").click(function (){
+    $(document).on("click",".updateCategoryStatus",function(){
         var status =$(this).children("i").attr("status");
         var category_id = $(this).attr("category_id");
         $.ajax({
@@ -109,7 +109,7 @@ $(document).ready(function (){
     });
 
     // Confirm Delete of Records with sweetalert
-    $(".confirmDelete").click(function (){
+    $(document).on("click",".confirmDelete",function (){
        var record = $(this).attr("record");
        var recordid = $(this).attr("recordid");
         Swal.fire({
@@ -128,7 +128,7 @@ $(document).ready(function (){
     });
 
     //Update Product Status
-    $(".updateProductStatus").click(function (){
+    $(document).on("click",".updateProductStatus",function (){
         var status =$(this).children("i").attr("status");
         var product_id = $(this).attr("product_id");
         $.ajax({
@@ -149,7 +149,7 @@ $(document).ready(function (){
         });
     });
     //Update Attribute Status
-    $(".updateAttributeStatus").click(function (){
+    $(document).on("click",".updateAttributeStatus",function (){
         var status =$(this).text();
         var attribute_id = $(this).attr("attribute_id");
         $.ajax({
@@ -172,8 +172,8 @@ $(document).ready(function (){
 
 
 
-    //Update Attribute Status
-    $(".updateImageStatus").click(function (){
+    //Update Image Status
+    $(document).on("click",".updateImageStatus",function (){
         var status =$(this).text();
         var image_id = $(this).attr("image_id");
         $.ajax({

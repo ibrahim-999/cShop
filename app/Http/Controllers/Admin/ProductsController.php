@@ -189,6 +189,9 @@ class ProductsController extends Controller
             if(!empty($data['is_featured'])){
                 $product->is_featured = $data['is_featured'];
             }
+            else{
+                $product->is_featured = "No";
+            }
 
             $product->status = 1;
             $product->save();
