@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -8,19 +8,19 @@
 	<meta name="author" content="">
 
 	<!-- Front style -->
-	<link id="callCss" rel="stylesheet" href="themes/css/front.min.css" media="screen"/>
-	<link href="themes/css/base.css" rel="stylesheet" media="screen"/>
+	<link id="callCss" rel="stylesheet" href="{{url ('css/front_css/front.min.css')}}" media="screen"/>
+	<link href="{{url ('css/front_css/base.css')}}" rel="stylesheet" media="screen"/>
 	<!-- Front style responsive -->
-	<link href="themes/css/front-responsive.min.css" rel="stylesheet"/>
-	<link href="themes/css/font-awesome.css" rel="stylesheet" type="text/css">
+	<link href="{{url ('css/front_css/front-responsive.min.css')}}" rel="stylesheet"/>
+	<link href="{{url ('css/front_css/font-awesome.css')}}" rel="stylesheet" type="text/css">
 	<!-- Google-code-prettify -->
-	<link href="themes/js/google-code-prettify/prettify.css" rel="stylesheet"/>
+	<link href="{{url('js/front_js/google-code-prettify/prettify.css')}}" rel="stylesheet"/>
 	<!-- fav and touch icons -->
-	<link rel="shortcut icon" href="themes/images/ico/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="themes/images/ico/apple-touch-icon-144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="themes/images/ico/apple-touch-icon-114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="themes/images/ico/apple-touch-icon-72-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" href="themes/images/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="{{asset('images/front_images/favicon.ico')}}">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('images/front_images/apple-touch-icon-144-precomposed.png')}}">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('images/front_images/apple-touch-icon-114-precomposed.png')}}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('images/front_images/apple-touch-icon-72-precomposed.png')}}">
+	<link rel="apple-touch-icon-precomposed" href="{{asset('images/front_images/apple-touch-icon-57-precomposed.png')}}">
 	<style type="text/css" id="enject"></style>
 </head>
 <body>
@@ -31,7 +31,7 @@
 		<div class="carousel-inner">
 			<div class="item active">
 				<div class="container">
-					<a href="#"><img style="width:100%" src="themes/images/carousel/1.png" alt="special offers"/></a>
+					<a href="#"><img style="width:100%" src="{{asset('images/front_images/carousel/1.png')}}" alt="special offers"/></a>
 					<div class="carousel-caption">
 						<h4>First Thumbnail label</h4>
 						<p>Banner text</p>
@@ -40,7 +40,7 @@
 			</div>
 			<div class="item">
 				<div class="container">
-					<a href="register.html"><img style="width:100%" src="themes/images/carousel/2.png" alt=""/></a>
+					<a href="register.html"><img style="width:100%" src="{{asset('images/front_images/carousel/2.png')}}" alt=""/></a>
 					<div class="carousel-caption">
 						<h4>Second Thumbnail label</h4>
 						<p>Banner text</p>
@@ -49,7 +49,7 @@
 			</div>
 			<div class="item">
 				<div class="container">
-					<a href="register.html"><img src="themes/images/carousel/3.png" alt=""/></a>
+					<a href="register.html"><img src="{{asset('images/front_images/carousel/3.png')}}" alt=""/></a>
 					<div class="carousel-caption">
 						<h4>Third Thumbnail label</h4>
 						<p>Banner text</p>
@@ -76,12 +76,12 @@
 @include('layouts.front_layout.front_footer')
 
 <!-- Placed at the end of the document so the pages load faster ============================================= -->
-<script src="themes/js/jquery.js" type="text/javascript"></script>
-<script src="themes/js/front.min.js" type="text/javascript"></script>
-<script src="themes/js/google-code-prettify/prettify.js"></script>
+<script src="{{url('js/front_js/jquery.js')}}" type="text/javascript"></script>
+<script src="{{url('js/front_js/front.min.js')}}" type="text/javascript"></script>
+<script src="{{url('js/front_js/google-code-prettify/prettify.js')}}"></script>
 
-<script src="themes/js/front.js"></script>
-<script src="themes/js/jquery.lightbox-0.5.js"></script>
+<script src="{{url('js/front_js/front.js')}}"></script>
+<script src="{{url('js/front_js/jquery.lightbox-0.5.js')}}"></script>
 
 </body>
 </html>
