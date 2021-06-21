@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Banner;
 use Session;
+use Image;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,7 @@ class BannerController extends Controller
 {
     public function banners()
     {
+        Session::put('page', 'banners');
         $banners = Banner::get()->toArray();
         /*dd($banners); die;*/
         return view('admin.banners.banners')->with(compact('banners'));
@@ -30,6 +32,55 @@ class BannerController extends Controller
             Banner::where('id',$data['banner_id'])->update(['status'=>$status]);
             return response()->json(['status'=>$status,'banner_id'=>$data['banner_id']]);
         }
+    }
+
+    public function addeditBanner($id = null, Request $request)
+    {
+        if($id == "")
+        {
+            //Add Banner
+            $title = "Add Banner";
+            $banner = new Banner();
+            $message = "Banner has been added successfully!";
+        }
+        else {
+            // Edit Banner
+            $title = "Edit Banner";
+            $banner = Banner::find($id);
+            $message= "Banner has been updated successfully!";
+        }
+
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            $banner->link = $data['link'];
+            $banner->title = $data['title'];
+            $banner->alt = $data['alt'];
+            //Upload Banner image
+            if($request->hasFile('image'))
+            {
+                $image_tmp = $request->file('image');
+                if($image_tmp->isValid())
+                {
+                    // Get Original image name
+                    $image_name = $image_tmp->getClientOriginalName();
+                    //Get Image extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate new image name
+                    $imageName = $image_name.'.'.rand(111,99999).'.'.$extension;
+                    //Set path for every size
+                    $banner_image_path = 'images/banner_images/'.$imageName;
+                    //Upload Banner Image after resize
+                    Image::make($image_tmp)->resize(1170,480)->save($banner_image_path);
+                    //Save image in the Banner table
+                    $banner->image = $imageName;
+                }
+            }
+            $banner->save();
+            session()->flash('success_message',$message);
+            return redirect('admin/banners');
+        }
+        return view('admin.banners.add_edit_banner')->with(compact('title','banner'));
     }
 
     public function deleteBanner($id)
