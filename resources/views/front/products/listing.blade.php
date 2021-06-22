@@ -2,13 +2,13 @@
 @section('content')
     <div class="span9">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-            <li class="active">{{$categoryDetails['catDetails']['category_name']}}</li>
+            <li><a href="{{url('/')}}">Home</a> <span class="divider">/</span></li>
+            <li class="active"><?php echo $categoryDetails['breadcrumbs']; ?></li>
         </ul>
-        <h3> {{$categoryDetails['catDetails']['category_name']}} <small class="pull-right"> 40 products are available </small></h3>
+        <h3> {{$categoryDetails['catDetails']['category_name']}} <small class="pull-right"> {{count($categoryProducts)}} products are available </small></h3>
         <hr class="soft"/>
         <p>
-            Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.
+            {{$categoryDetails['catDetails']['description']}}
         </p>
         <hr class="soft"/>
         <form class="form-horizontal span6">
@@ -212,15 +212,15 @@
                             <a href="product_details.html">
                                 <?php $product_image_path = 'images/product_images/small/'.$product['main_image']; ?>
                                 @if(!empty($product['main_image'])&& file_exists($product_image_path))
-                                    <img src="{{asset($product_image_path)}}" alt="">
+                                    <img style="width: 250px; height: 250px;" src="{{asset($product_image_path)}}" alt="">
                                 @else
-                                    <img src="{{asset('images/product_images/small/no-image.png')}}" alt="">
+                                    <img style="width: 250px; height: 250px;" src="{{asset('images/product_images/small/no-image.png')}}" alt="">
                                 @endif
                             </a>
                             <div class="caption">
                                 <h5>{{$product['product_name']}}</h5>
                                 <p>
-                                    I'm a paragraph. Click here
+                                    {{$product['brand']['name']}}
                                 </p>
                                 <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">{{$product['product_price']}}</a></h4>
                             </div>

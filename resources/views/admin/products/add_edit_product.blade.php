@@ -124,7 +124,7 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
-                                        <div>Recommended Image Size: Width:1040px, Height:1200px</div>
+                                        <div>Recommended Image Size: Width:1000px, Height:1000px</div>
                                         @if(!empty($productdata['main_image']))
                                             <div><img style="width:80px; margin-top: 5px;" src="{{asset('images/product_images/small/'.$productdata['main_image'])}}">&nbsp;<a class="confirmDelete" href="javascript:void(0)" record="product-image" recordid="{{$productdata['id']}}" >Delete Image</a></div>
                                         @endif
