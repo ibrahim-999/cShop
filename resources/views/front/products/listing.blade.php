@@ -33,7 +33,11 @@
                 @foreach($categoryProducts as $product)
                 <div class="row">
                     <div class="span2">
-                        <?php $product_image_path = 'images/product_images/small/'.$product['main_image']; ?>
+                        @if(isset($productp['main_image']))
+                            <?php $product_image_path = 'images/product_images/small/'.$product['main_image']; ?>
+                        @else
+                            <?php $product_image_path = ''; ?>
+                        @endif
                         @if(!empty($product['main_image'])&& file_exists($product_image_path))
                             <img style="width: 250px; " src="{{asset($product_image_path)}}" alt="">
                         @else
@@ -72,6 +76,11 @@
                     <li class="span3">
                         <div class="thumbnail">
                             <a href="product_details.html">
+                                @if(isset($productp['main_image']))
+                                    <?php $product_image_path = 'images/product_images/small/'.$product['main_image']; ?>
+                                @else
+                                    <?php $product_image_path = ''; ?>
+                                @endif
                                 <?php $product_image_path = 'images/product_images/small/'.$product['main_image']; ?>
                                 @if(!empty($product['main_image'])&& file_exists($product_image_path))
                                     <img style="width: 250px; height: 250px;" src="{{asset($product_image_path)}}" alt="">
@@ -95,15 +104,7 @@
         </div>
         <a href="compair.html" class="btn btn-large pull-right">Compare Product</a>
         <div class="pagination">
-            <ul>
-                <li><a href="#">&lsaquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">...</a></li>
-                <li><a href="#">&rsaquo;</a></li>
-            </ul>
+            {{$categoryProducts->links()}}
         </div>
         <br class="clr"/>
     </div>
