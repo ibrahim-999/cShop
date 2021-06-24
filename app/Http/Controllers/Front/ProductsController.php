@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Category;
-
+use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
@@ -13,6 +13,7 @@ class ProductsController extends Controller
 {
     public function listing( Request $request)
     {
+        Paginator::useBootstrap();
         if($request->ajax())
         {
             $data = $request->all();
