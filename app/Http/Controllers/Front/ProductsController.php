@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Category;
+use App\ProductsAttribute;
 use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -115,6 +116,7 @@ class ProductsController extends Controller
     public function detail($id)
     {
         $productDetails = Product::with('category','brand','attributes','images')->find($id)->toArray();
-        return view('front.products.detail')->with(compact('productDetails'));
+        $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
+        return view('front.products.detail')->with(compact('productDetails','total_stock'));
     }
 }
