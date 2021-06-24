@@ -19,7 +19,6 @@ class Product extends Model
     {
         return $this->belongsTo('App\Brand','brand_id');
     }
-
     public function attributes()
     {
         return $this->hasMany('App\ProductsAttribute');
@@ -27,6 +26,17 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany('App\ProductsImage');
+    }
+    public static function productFilters()
+    {
+        // Filter Arrays
+        $productFilters['fabricArray'] = array('Cotton','Polyester','Wool');
+        $productFilters['sleeveArray'] = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
+        $productFilters['patternArray'] = array('Checked','Plain','Printed','Self','Solid');
+        $productFilters['fitArray'] = array('Regular','Slim');
+        $productFilters['occasionArray'] = array('Casual','Formal');
+
+        return $productFilters;
     }
 
 

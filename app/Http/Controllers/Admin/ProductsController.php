@@ -199,14 +199,13 @@ class ProductsController extends Controller
             return redirect('admin/products');
 
         }
-
-        //
-        // Filter Arrays
-        $fabricArray = array('Cotton','Polyester','Wool');
-        $sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
-        $patternArray = array('Checked','Plain','Printed','Self','Solid');
-        $fitArray = array('Regular','Slim');
-        $occasionArray = array('Casual','Formal');
+        //Product Filters
+        $productFilters = Product::productFilters();
+        $fabricArray = $productFilters['fabricArray'];
+        $sleeveArray = $productFilters['sleeveArray'];
+        $patternArray = $productFilters['patternArray'];
+        $fitArray = $productFilters['fitArray'];
+        $occasionArray = $productFilters['occasionArray'];
 
         // Sections with Categories and Subcategories
         $categories = Section::with('Categories')->get();
@@ -253,9 +252,6 @@ class ProductsController extends Controller
         session()->flash('success_message',$message);
         return redirect()->back();
     }
-
-
-
     public function deleteImage($id)
     {
         $product_image = ProductsImage::select('image')->where('id',$id)->first();
@@ -288,9 +284,6 @@ class ProductsController extends Controller
         session()->flash('success_message',$message);
         return redirect()->back();
     }
-
-
-
     public function deleteProductVideo($id)
     {
         $product_video = Product::select('product_video')->where('id',$id)->first();
@@ -315,7 +308,6 @@ class ProductsController extends Controller
         session()->flash('success_message',$message);
         return redirect()->back();
     }
-
     public function deleteProduct($id)
     {
         //Delete Product
@@ -324,7 +316,6 @@ class ProductsController extends Controller
         session()->flash('success_message',$message);
         return redirect()->back();
     }
-
     public function deleteAttribute($id)
     {
         //Delete Product
@@ -333,7 +324,6 @@ class ProductsController extends Controller
         session()->flash('success_message',$message);
         return redirect()->back();
     }
-
     public function addAttributes(Request $request, $id)
     {
         if($request->isMethod('post'))
@@ -400,7 +390,6 @@ class ProductsController extends Controller
 
         }
     }
-
     public function addImages(Request $request,$id)
     {
         if($request->isMethod('post'))
