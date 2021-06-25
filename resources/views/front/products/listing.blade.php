@@ -30,7 +30,7 @@
 
             @include('front.products.ajax_products_listing')
         </div>
-        <a href="compair.html" class="btn btn-large pull-right">Compare Product</a>
+        <a href="#" class="btn btn-large pull-right">Compare Product</a>
         <div class="pagination">
             @if (isset($_GET['sort']) && !empty($_GET['sort']))
                 {{$categoryProducts->appends(['sort'=>$_GET['sort']])->links()}}

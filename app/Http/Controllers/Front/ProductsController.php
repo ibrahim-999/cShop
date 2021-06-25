@@ -9,6 +9,7 @@ use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -161,8 +162,17 @@ class ProductsController extends Controller
                 Session::put('session_id',$session_id);
             }
             //Check if already exists in the cart
-            $countProducts = Cart::where(['product_id'=>$data['product_id'],'size'=>$data['size']])
-                ->count();
+            if(Auth::check())
+            {
+                // User is logged in
+                $countProducts = Cart::where(['product_id'=>$data['product_id'],
+                    'size'=>$data['size'],'user_id'=>Auth::user()->id])->count();
+            }else {
+                //User is not logged in
+                $countProducts = Cart::where(['product_id'=>$data['product_id'],
+                    'size'=>$data['size'],'session_id'=>Session::get('session_id')])->count();
+            }
+
             if($countProducts>0){
                 $message = "Product already exists in cart";
                 session::flash('error_message',$message);
@@ -180,5 +190,10 @@ class ProductsController extends Controller
             session::flash('success_message',$message);
             return redirect()->back();
         }
+    }
+
+    public function cart()
+    {
+        return view ('front.products.cart');
     }
 }
