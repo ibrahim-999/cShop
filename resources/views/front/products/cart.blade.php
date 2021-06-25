@@ -52,9 +52,14 @@
             </tr>
             </thead>
             <tbody>
+            @foreach($userCartItems as $item)
             <tr>
-                <td> <img width="60" src="themes/images/products/4.jpg" alt=""/></td>
-                <td>Casual T-Shirt<br/>Color : Black</td>
+                <td> <img width="60" src="{{ asset('images/product_images/small/'.$item['product']['main_image'])}}" alt=""/></td>
+                <td>{{$item['product']['product_name']}}<br/>
+                    Color : {{$item['product']['product_color']}}<br/>
+                    Code : {{$item['product']['product_code']}}<br/>
+                    Size : {{$item['size']}}<br/>
+                </td>
                 <td>
                     <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
                 </td>
@@ -63,29 +68,7 @@
                 <td>Rs.0.00</td>
                 <td>Rs.1000.00</td>
             </tr>
-            <tr>
-                <td> <img width="60" src="themes/images/products/8.jpg" alt=""/></td>
-                <td>Casual T-Shirt<br/>Color : Black</td>
-                <td>
-                    <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1"  size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
-                </td>
-                <td>Rs.1000.00</td>
-                <td>Rs.0.00</td>
-                <td>Rs.0.00</td>
-                <td>Rs.1000.00</td>
-            </tr>
-            <tr>
-                <td> <img width="60" src="themes/images/products/3.jpg" alt=""/></td>
-                <td>Casual T-Shirt<br/>Color : Blue</td>
-                <td>
-                    <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1"  size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
-                </td>
-                <td>Rs.1000.00</td>
-                <td>Rs.0.00</td>
-                <td>Rs.0.00</td>
-                <td>Rs.1000.00</td>
-            </tr>
-
+            @endforeach
             <tr>
                 <td colspan="6" style="text-align:right">Total Price:	</td>
                 <td> Rs.3000.00</td>
