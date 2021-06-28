@@ -138,8 +138,15 @@ $(document).ready(function (){
             data:{size:size,product_id:product_id},
             type:'post',
             success:function (resp) {
-                $(".getAttrPrice").html("US."+resp);
-            },error:function () {
+                if(resp['discount']>0)
+                {
+                    $(".getAttrPrice").html("<del>US. "+resp['product_price']+"</del> US."+resp['final_price']);
+                }else {
+                    $(".getAttrPrice").html("US. "+resp['product_price']);
+                }
+
+            },
+            error:function () {
                 alert("Error")
             }
         });

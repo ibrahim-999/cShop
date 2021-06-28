@@ -132,11 +132,10 @@ class ProductsController extends Controller
         if($request->ajax())
         {
             $data = $request->all();
-            $getProductPrice = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$data['size']])->first();
-            return $getProductPrice->price;
+            $getDiscountedAttrPrice = Product::getDiscountedAttrPrice($data['product_id'],$data['size']);
+            return $getDiscountedAttrPrice;
         }
     }
-
     public function addToCart(Request $request)
     {
         if($request->isMethod('post'))
@@ -188,10 +187,9 @@ class ProductsController extends Controller
             $cart->save();*/
             $message = "Product has been added to cart";
             session::flash('success_message',$message);
-            return redirect()->back();
+            return redirect('cart');
         }
     }
-
     public function cart()
     {
         $userCartItems = Cart::userCartItems();

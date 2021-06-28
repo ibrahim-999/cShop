@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 @extends('layouts.front_layout.front_layout')
 @section('content')
 <div class="span9">
@@ -23,8 +24,17 @@
                                                 </a>
 												<div class="caption">
 													<h5>{{$item['product_name']}}</h5>
+                                                    <?php $discounted_price = Product::getDiscountedPrice($item['id']) ?>
 													<h4><a class="btn" href="{{url('product/'.$item['id'])}}">VIEW</a>
-                                                        <span class="pull-right">US.{{$item['product_price']}}</span></h4>
+                                                        <span class="pull-right" style="font-size: 13px;">
+                                                            @if($discounted_price>0)
+                                                            <del>US.{{$item['product_price']}}</del>
+                                                                <font color="green">US.{{$discounted_price}}</font>
+                                                            @else
+                                                                US.{{$item['product_price']}}
+                                                            @endif
+                                                        </span>
+                                                    </h4>
 												</div>
 											</div>
 										</li>
@@ -56,9 +66,18 @@
 								<p>
 									{{$product['product_code']}} ({{$product['product_color']}})
 								</p>
-
-								<h4 style="text-align:center"><a class="btn" href="{{url('product/'.$product['id'])}}"> <i class="icon-zoom-in"></i></a>
-                                    <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">US.{{$product['product_price']}}</a></h4>
+                                <?php $discounted_price=Product::getDiscountedPrice($product['id']) ?>
+								<h4 style="text-align:center">
+<!--                                    <a class="btn" href="{{url('product/'.$product['id'])}}"><i class="icon-zoom-in"></i></a>-->
+                                    <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                                    @if($discounted_price>0)
+                                            <del>US.{{$product['product_price']}}</del>
+                                                 <font color="yellow">US.{{$product['product_price']}}</font>
+                                        @else
+                                            US.{{$product['product_price']}}
+                                        @endif
+                                    </a>
+                                </h4>
 							</div>
 						</div>
 					</li>

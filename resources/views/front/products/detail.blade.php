@@ -60,7 +60,15 @@
                 <form action="{{url('add-to-cart')}}" method="post" class="form-horizontal qtyFrm">@csrf
                     <input type="hidden" name="product_id" value="{{$productDetails['id']}}">
                     <div class="control-group">
-                        <h4 class="getAttrPrice">$.{{$productDetails['product_price']}} </h4>
+                        <?php $discounted_price = \App\Product::getDiscountedPrice($productDetails['id']); ?>
+
+                        <h4 class="getAttrPrice">
+                            @if($discounted_price>0)
+                                <del>US.{{$productDetails['product_price']}}</del> US.{{$discounted_price}}
+                            @else
+                            US.{{$productDetails['product_price']}}
+                            @endif
+                        </h4>
                         <select name="size" id="getPrice" product-id="{{$productDetails['id']}}" class="span2 pull-left" required="">
                             <option value="">Select Size</option>
                             @foreach($productDetails['attributes'] as $attribute)

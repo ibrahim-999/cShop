@@ -23,10 +23,10 @@ $sections = Section::sections();
 		          <span class="icon-bar"></span>
 		          <span class="icon-bar"></span>
 		        </a>
-		        <a class="brand" href="#">cShop</a>
+		        <a class="brand" href="/">cShop</a>
 		        <div class="nav-collapse">
 		          <ul class="nav">
-		            <li class="active"><a href="#">Home</a></li>
+		            <li class="active"><a href="/">Home</a></li>
 		            @foreach($sections as $section)
                         @if(count($section['categories'])> 0 )
                           <li class="dropdown">
