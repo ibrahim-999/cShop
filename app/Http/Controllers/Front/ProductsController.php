@@ -239,4 +239,16 @@ class ProductsController extends Controller
                 ->with(compact('userCartItems'))]);
         }
     }
+
+    public function deleteCartItem(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = $request->all();
+            Cart::where('id',$data['cartid'])->delete();
+            $userCartItems = Cart::userCartItems();
+            return response()->json(['view'=>(String)View::make('front.products.cart_items')
+                ->with(compact('userCartItems'))]);
+        }
+    }
 }

@@ -31,7 +31,7 @@
                     <button class="btn btnItemUpdate qtyPlus" type="button" data-cartId="{{$item['id']}}">
                         <i class="icon-plus"></i>
                     </button>
-                    <button class="btn btn-danger" type="button">
+                    <button class="btn btn-danger btnItemDelete" type="button" data-cartId="{{$item['id']}}">
                         <i class="icon-remove icon-white"></i>
                     </button>
                 </div>
