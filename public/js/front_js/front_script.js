@@ -179,6 +179,10 @@ $(document).ready(function (){
             url:'/update-cart-item-qty',
             type:'post',
             success:function (resp) {
+               if(resp.status==false)
+               {
+                   alert(resp.message);
+               }
                 $("#AppendCartItems").html(resp.view);
             },
             error:function () {
