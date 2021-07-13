@@ -211,4 +211,45 @@ $(document).ready(function (){
         }
 
     });
+    // validate signup form on keyup and submit
+    $("#registerForm").validate({
+        rules: {
+            name: "required",
+            mobile: {
+                required: true,
+                minlength:11,
+                maxlength:14,
+                digits:true
+            },
+            password: {
+                required: true,
+                minlength: 8
+            },
+            email: {
+                required: true,
+                email: true,
+                remote:"check-email"
+            },
+        },
+        messages: {
+            name: "Please enter your name",
+            mobile: {
+                required:"Please enter your mobile",
+                minlength: "Your mobile must be at least 11 digits long",
+                maxlength: "Your mobile must be at most 14 digits long",
+                digits: "Please enter a valid mobile",
+            },
+            password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 8 characters long"
+            },
+            email: {
+                required:"Please enter your email",
+                email:"Please enter a valid email",
+                remote:"Email already exists"
+
+            }
+        }
+    });
+
 });

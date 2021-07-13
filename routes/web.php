@@ -16,7 +16,7 @@
 });*/
 use App\Category;
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -107,4 +107,19 @@ Route::namespace('Front')->group(function (){
 
     //Delete Cart Item
     Route::post('/delete-cart-item','ProductsController@deleteCartItem');
+
+    //Login/Register Page
+    Route::get('/login-register','UserController@loginRegister');
+
+    //Login User
+    Route::post('/login','UserController@loginUser');
+
+    //Register User
+    Route::post('/register','UserController@registerUser');
+
+    //Check if email already exists
+    Route::match(['get','post'],'/check-email','UserController@checkEmail');
+
+    //Logout User
+    Route::get('/logout', 'UserController@logout');
 });
