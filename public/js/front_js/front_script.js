@@ -271,7 +271,7 @@ $(document).ready(function (){
             email: {
                 required:"Please enter your email",
                 email:"Please enter a valid email",
-                
+
 
             }
         }

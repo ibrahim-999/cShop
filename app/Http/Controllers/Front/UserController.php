@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\Authenticate;
 use App\User;
@@ -42,7 +43,14 @@ class UserController extends Controller
                 $user->save();
 
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                    return redirect('/');
+                    // Update User Cart with user_id
+                    if(!empty(Session::get('session_id')))
+                    {
+                        $user_id = Auth::user()->id;
+                        $session_id = Session::get('session_id');
+                        Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+                    }
+                    return redirect('/cart');
                 }
             }
         }
@@ -55,6 +63,13 @@ class UserController extends Controller
             $data = $request->all();
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']]))
             {
+                // Update User Cart with user_id
+                if(!empty(Session::get('session_id')))
+                {
+                    $user_id = Auth::user()->id;
+                    $session_id = Session::get('session_id');
+                    Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+                }
                 return redirect('/cart');
             }
             else

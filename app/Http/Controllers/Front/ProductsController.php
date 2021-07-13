@@ -178,14 +178,23 @@ class ProductsController extends Controller
                 session::flash('error_message',$message);
                 return redirect()->back();
             }
+
+            if(Auth::check())
+            {
+                $user_id = Auth::user()->id;
+            }
+            else {
+                $user_id = 0;
+            }
             //Save Product in Cart
-            Cart::insert(['session_id'=>$session_id,'product_id'=>$data['product_id'],'size'=>$data['size'],'quantity'=>$data['quantity']]);
-            /*$cart = new Cart();
-            $cart->session_id = 'session_id';
+            //Cart::insert(['session_id'=>$session_id,'product_id'=>$data['product_id'],'size'=>$data['size'],'quantity'=>$data['quantity']]);
+            $cart = new Cart();
+            $cart->session_id = $session_id;
+            $cart->user_id = 'user_id';
             $cart->product_id = $data['product_id'];
             $cart->size = $data['size'];
             $cart->quantity = $data['quantity'];
-            $cart->save();*/
+            $cart->save();
             $message = "Product has been added to cart";
             session::flash('success_message',$message);
             return redirect('cart');
