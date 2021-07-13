@@ -7,6 +7,7 @@ use App\Http\Middleware\Authenticate;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -43,6 +44,24 @@ class UserController extends Controller
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     return redirect('/');
                 }
+            }
+        }
+    }
+
+    public function loginUser(Request $request)
+    {
+        if($request->method('post'))
+        {
+            $data = $request->all();
+            if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']]))
+            {
+                return redirect('/cart');
+            }
+            else
+            {
+                $message = "Invalid Email or Password";
+                Session::flash('error_message',$message);
+                return redirect()->back();
             }
         }
     }

@@ -251,5 +251,30 @@ $(document).ready(function (){
             }
         }
     });
+    $("#loginForm").validate({
+        rules: {
+            password: {
+                required: true,
+                minlength: 8
+            },
+            email: {
+                required: true,
+                email: true,
+
+            },
+        },
+        messages: {
+            password: {
+                required: "Please enter your password",
+                minlength: "Your password must be at least 8 characters long"
+            },
+            email: {
+                required:"Please enter your email",
+                email:"Please enter a valid email",
+                
+
+            }
+        }
+    });
 
 });
