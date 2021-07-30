@@ -183,6 +183,48 @@ class UserController extends Controller
             return "true";
     }
 
+    public function forgotPassword(Request $request)
+    {
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+            $emailCount = User::where('email',$data['email'])->count();
+            if($emailCount == 0)
+            {
+                $message = "Email does not exist";
+                Session::put('error_message',$message);
+                Session::forget('success_message');
+                return redirect()->back();
+            }
+
+            // Generate Random Password
+                $random_password = str_random(8);
+            // Encode/Secure Password
+                $new_password = bcrypt($random_password);
+            // Update Password
+            User::where('email',$data['email'])->update(['password'=>$new_password]);
+            //Get User Name
+            $userName = User::select('name')->where('email',$data['email'])->first();
+            // Send Forgot Password Email
+            $email = $data['email'];
+            $name = $userName->name;
+            $messageData = [
+              'email'=>$email,
+                'name'=>$name,
+                'password'=>$random_password,
+            ];
+            Mail::send('emails.forgot_password',$messageData,function($message) use ($email){
+                $message->to($email)->subject('New Password - cShop Website');
+            });
+            $message="Please check your email for new password!";
+            Session::put('success_message',$message);
+            Session::forget('error_message');
+            return redirect('login-register');
+
+        }
+        return view('front.users.forgot_password');
+    }
+
     public function logout()
     {
         Auth::logout();

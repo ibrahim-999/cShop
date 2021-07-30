@@ -6,7 +6,7 @@
             <li><a href="/">Home</a> <span class="divider">/</span></li>
             <li class="active">Login</li>
         </ul>
-        <h3> Login / Register</h3>
+        <h3>Forgot Password</h3>
         <hr class="soft"/>
         @if(Session::has('success_message'))
             <div class="alert alert-success alert-success" role="alert" >
@@ -27,38 +27,18 @@
         <div class="row">
             <div class="span4">
                 <div class="well">
-                    <h5>CREATE YOUR ACCOUNT</h5><br/>
-                    Enter your details to create an account.<br/><br/>
-                    <form id="registerForm" action="{{url('/register')}}" method="post">@csrf
-                        <div class="control-group">
-                            <label class="control-label" for="name">Name</label>
-                            <div class="controls">
-                                <input class="span3"  type="text" name="name" id="name" placeholder="Enter Name">
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label" for="mobile">Mobile</label>
-                            <div class="controls">
-                                <input class="span3"  type="text" name="mobile" id="mobile" placeholder="Enter Mobile">
-                            </div>
-                        </div>
-
+                    <h5>FORGOT PASSWORD</h5><br/>
+                    Enter your email to get new password.<br/><br/>
+                    <form id="forgotPasswordForm" action="{{url('/forgot-password')}}" method="post">@csrf
                         <div class="control-group">
                             <label class="control-label" for="email">E-mail</label>
                             <div class="controls">
-                                <input class="span3"  type="email" name="email" id="email" placeholder="Enter Email">
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label" for="password">Password</label>
-                            <div class="controls">
-                                <input class="span3"  type="password" name="password" id="password" placeholder="Enter Password">
+                                <input class="span3"  type="email" name="email" id="email"
+                                       placeholder="Enter Email" required="">
                             </div>
                         </div>
                         <div class="controls">
-                            <button type="submit" class="btn block">Create Your Account</button>
+                            <button type="submit" class="btn block">Submit</button>
                         </div>
                     </form>
                 </div>

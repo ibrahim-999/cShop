@@ -31,8 +31,13 @@
             <td>Password: ***** (as chosen by you)</td>
         </tr>
         <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
             <td>Thanks & Regards, </td>
         </tr>
+        <tr>
+            <td>cShop Website </td>
     </table>
 </body>
 </html>
