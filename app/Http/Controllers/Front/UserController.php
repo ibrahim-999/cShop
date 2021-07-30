@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Front;
 use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\Authenticate;
+use App\Sms;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -21,6 +23,8 @@ class UserController extends Controller
     {
         if($request->isMethod('post'))
         {
+            Session::forget('error_message');
+            Session::forget('success_message');
             $data = $request->all();
             //dd($data); die;
 
@@ -39,10 +43,28 @@ class UserController extends Controller
                 $user->mobile = $data['mobile'];
                 $user->email = $data['email'];
                 $user->password =bcrypt($data['password']);
-                $user->status =1;
+                $user->status = 0 ;
                 $user->save();
 
-                if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+                // Send Email Confirmation
+                $email = $data['email'];
+                $messageData = [
+                    'email'=>$data['email'],
+                    'name'=>$data['name'],
+                    'code'=>base64_encode($data['email']),
+                ];
+
+                Mail::send('emails.confirmation',$messageData,function($message) use($email){
+                   $message->to($email)->subject('Confirm Your Email Account');
+                });
+
+                //Redirect Back With Success Message
+                $message = "Please confirm your email to activate your account!";
+                Session::put('success_message',$message);
+                return redirect()->back();
+
+
+               /* if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     // Update User Cart with user_id
                     if(!empty(Session::get('session_id')))
                     {
@@ -50,8 +72,21 @@ class UserController extends Controller
                         $session_id = Session::get('session_id');
                         Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
                     }
+
+                    // Send Register Sms
+                    $message = "Dear Customer, you have been successfully registered with cShop Website. Login in to your account to access orders and offers";
+                    $mobile = $data['mobile'];
+                    Sms::sendSms($message, $mobile);
+
+                    // Send Register with gmail
+                    $email = $data['email'];
+                    $messageData = ['name'=>$data['name'],'mobile'=>$data['mobile'],'email'=>$data['email']];
+                    Mail::send('emails.register',$messageData,function($message) use ($email){
+                        $message->to($email)->subject('Welcome to cShop Website');
+                    });
+
                     return redirect('/cart');
-                }
+                }*/
             }
         }
     }
@@ -60,9 +95,20 @@ class UserController extends Controller
     {
         if($request->method('post'))
         {
+            Session::forget('error_message');
+            Session::forget('success_message');
             $data = $request->all();
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']]))
             {
+                //Check Email is activated or not
+                $userStatus = User::where('email',$data['email'])->first();
+                if($userStatus->status == 0)
+                {
+                    Auth::logout();
+                    $message = "Your account is not activated yet! Please confirm your email to activate";
+                    Session::put('error_message',$message);
+                    return redirect()->back();
+                }
                 // Update User Cart with user_id
                 if(!empty(Session::get('session_id')))
                 {
@@ -78,6 +124,50 @@ class UserController extends Controller
                 Session::flash('error_message',$message);
                 return redirect()->back();
             }
+        }
+    }
+
+    public function confirmAccount($email)
+    {
+        Session::forget('error_message');
+        Session::forget('success_message');
+        //Decode User Email
+        $email = base64_decode($email);
+
+        //Check if User Email Exists
+
+        $userCount = User::where('email',$email)->count();
+
+        if($userCount>0)
+        {
+            //User Email is already activated or not
+            $userDetails = User::where('email',$email)->first();
+            if($userDetails->status == 1)
+            {
+                $message = "Your Email account is already activated. Please login";
+                Session::put('error_message',$message);
+                return redirect('login-register');
+
+            }else {
+                // Update user status to 1
+                User::where('email',$email)->update(['status'=>1]);
+
+                    // Send Register with gmail
+                    $messageData = [
+                        'name' => $userDetails['name'],
+                        'mobile' => $userDetails['mobile'],
+                        'email' =>$email];
+                    Mail::send('emails.register', $messageData, function ($message) use ($email) {
+                        $message->to($email)->subject('Welcome to cShop Website');
+                    });
+                    // Redirect User to Login Register Page with Success Message
+                    $message = "Your Email is activated successfully! You can login now";
+                    Session::put('success_message',$message);
+                    return redirect('login-register');
+            }
+        }
+        else {
+            abort(404);
         }
     }
 
