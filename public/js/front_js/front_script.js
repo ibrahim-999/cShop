@@ -214,7 +214,10 @@ $(document).ready(function (){
     // validate signup form on keyup and submit
     $("#registerForm").validate({
         rules: {
-            name: "required",
+            name: {
+                required: true,
+                lettersonly: true
+            },
             mobile: {
                 required: true,
                 minlength:11,
@@ -232,7 +235,10 @@ $(document).ready(function (){
             },
         },
         messages: {
-            name: "Please enter your name",
+            name: {
+                required: "Please enter your Name",
+                lettersonly: "Please enter a valid Name",
+            },
             mobile: {
                 required:"Please enter your mobile",
                 minlength: "Your mobile must be at least 11 digits long",
@@ -251,6 +257,7 @@ $(document).ready(function (){
             }
         }
     });
+    // validate login form on keyup and submit
     $("#loginForm").validate({
         rules: {
             password: {
@@ -275,6 +282,90 @@ $(document).ready(function (){
 
             }
         }
+    });
+
+    // validate account form on keyup and submit
+    $("#accountForm").validate({
+        rules: {
+            name: {
+                required: true,
+                lettersonly: true
+            },
+            mobile: {
+                required: true,
+                minlength:11,
+                maxlength:14,
+                digits:true
+            },
+        },
+        messages: {
+            name: {
+                required: "Please enter your Name",
+                lettersonly: "Please enter a valid Name",
+            },
+            mobile: {
+                required:"Please enter your mobile",
+                minlength: "Your mobile must be at least 11 digits long",
+                maxlength: "Your mobile must be at most 14 digits long",
+                digits: "Please enter a valid mobile",
+            },
+            password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 8 characters long"
+            },
+            email: {
+                required:"Please enter your email",
+                email:"Please enter a valid email",
+                remote:"Email already exists"
+
+            }
+        }
+    });
+
+    // validate password form on keyup and submit
+    $("#passwordForm").validate({
+        rules: {
+            current_pwd: {
+                required: true,
+                minlength: 8,
+                maxlength:20
+            },
+            new_pwd: {
+                required: true,
+                minlength: 8,
+                maxlength:20
+            },
+            confirm_pwd: {
+                required: true,
+                minlength: 8,
+                maxlength:20,
+                equalTo:"#new_pwd"
+            }
+        }
+
+    });
+
+
+    //Check Current User Password
+    $("#current_pwd").keyup(function (){
+        var current_pwd = $(this).val();
+        // alert(current_pwd);
+        $.ajax({
+            type:'post',
+            url:'/check-user-pwd',
+            data:{current_pwd:current_pwd},
+            success:function (resp){
+                //alert(resp);
+                if(resp=="false"){
+                    $("#chkPwd").html("<font color=red>Current Password is incorrect</font>");
+                }
+                else if (resp=="true"){
+                    $("#chkPwd").html("<font color=green>Current Password is correct</font>");
+                }
+            },error:function (){
+                alert("Error");
+            }
+        });
     });
 
 });

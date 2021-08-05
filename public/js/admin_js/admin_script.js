@@ -1,7 +1,6 @@
 var $=jQuery.noConflict();
 $(document).ready(function (){
     // Check admin is correct
-
     $("#current_pwd").keyup(function (){
         var current_pwd = $("#current_pwd").val();
        // alert(current_pwd);
