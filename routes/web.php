@@ -71,10 +71,15 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('delete-brand/{id}','BrandController@deleteBrand');
 
         //Banner Routes
-        Route::get('banners','BannerController@banners');
-        Route::post('update-banner-status','BannerController@updateBannerStatus');
-        Route::match(['get','post'],'add-edit-banner/{id?}','BannerController@addEditBanner');
-        Route::get('delete-banner/{id}','BannerController@deleteBanner');
+        Route::get('banners','BannersController@banners');
+        Route::post('update-banner-status','BannersController@updateBannerStatus');
+        Route::match(['get','post'],'add-edit-banner/{id?}','BannersController@addEditBanner');
+        Route::get('delete-banner/{id}','BannersController@deleteBanner');
+
+        // Coupons
+
+        Route::get('coupons','CouponsController@coupons');
+        Route::post('update-coupon-status','CouponsController@updateCouponStatus');
 
 
     });
