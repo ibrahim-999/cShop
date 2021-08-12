@@ -183,6 +183,7 @@ $(document).ready(function (){
                {
                    alert(resp.message);
                }
+                $(".totalCartItems").html(resp.totalCartItems);
                 $("#AppendCartItems").html(resp.view);
             },
             error:function () {
@@ -202,6 +203,7 @@ $(document).ready(function (){
                 url:'/delete-cart-item',
                 type:'post',
                 success:function (resp) {
+                    $(".totalCartItems").html(resp.totalCartItems);
                     $("#AppendCartItems").html(resp.view);
                 },
                 error:function () {

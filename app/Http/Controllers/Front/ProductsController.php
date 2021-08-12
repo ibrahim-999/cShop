@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Cart;
 use App\Category;
 use App\ProductsAttribute;
+use http\Header;
 use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -244,7 +245,10 @@ class ProductsController extends Controller
 
             Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
             $userCartItems = Cart::userCartItems();
-            return response()->json(['status'=>true,'view'=>(String)View::make('front.products.cart_items')
+            $totalCartItems = totalCartItems();
+            return response()->json(['status'=>true,
+                'totalCartItems'=>$totalCartItems,
+                'view'=>(String)View::make('front.products.cart_items')
                 ->with(compact('userCartItems'))]);
         }
     }
@@ -256,7 +260,10 @@ class ProductsController extends Controller
             $data = $request->all();
             Cart::where('id',$data['cartid'])->delete();
             $userCartItems = Cart::userCartItems();
-            return response()->json(['view'=>(String)View::make('front.products.cart_items')
+            $totalCartItems= totalCartItems();
+            return response()->json([
+                'totalCartItems'=>$totalCartItems,
+                'view'=>(String)View::make('front.products.cart_items')
                 ->with(compact('userCartItems'))]);
         }
     }
