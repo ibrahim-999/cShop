@@ -237,11 +237,6 @@ $(document).ready(function (){
         });
     });
 
-
-
-
-
-
     // Product Attributes Add/Remove Script
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
@@ -263,5 +258,14 @@ $(document).ready(function (){
         e.preventDefault();
         $(this).parent('div').remove(); //Remove field html
         x--; //Decrement field counter
+    });
+
+
+    // Show/Hide Coupon Field for Manual/Automatic
+    $("#ManualCoupon").click(function (){
+       $("#couponField").show();
+    });
+    $("#AutomaticCoupon").click(function (){
+        $("#couponField").hide();
     });
 });

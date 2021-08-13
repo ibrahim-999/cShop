@@ -11,7 +11,8 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset('images/admin_images/admin_photos/'.Auth::guard('admin')->user()->image)}}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{asset('images/admin_images/admin_photos/'.Auth::guard('admin')->user()->image)}}"
+               class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ucwords (Auth::guard('admin')->user()->name)}}</a>
@@ -77,7 +78,8 @@
                     Session::get('page')=="categories" ||
                     Session::get('page')=="products" ||
                     Session::get('page')=="brands" ||
-                    Session::get('page')=="banners")
+                    Session::get('page')=="banners" ||
+                    Session::get('page')=="coupons")
 
                     <?php $active = "active"; ?>
                 @else
@@ -145,6 +147,18 @@
                                 <a href="{{url('admin/banners')}}" class="nav-link {{$active}}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Banners</p>
+                                </a>
+                            </li>
+
+                            @if(Session::get('page')=="coupons")
+                                <?php $active = "active"; ?>
+                            @else
+                                <?php $active = ""; ?>
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{url('admin/coupons')}}" class="nav-link {{$active}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Coupons</p>
                                 </a>
                             </li>
                     </ul>
