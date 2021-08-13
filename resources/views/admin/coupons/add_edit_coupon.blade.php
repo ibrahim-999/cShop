@@ -70,8 +70,30 @@
                                     </div>
                                     <div class="form-group" style="display: none;" id="couponField">
                                         <label for="coupon_code">Coupon Code</label>
-                                        <input type="coupon_code" class="form-control" name="coupon_code" id="coupon_code" placeholder="Enter Coupon Code">
+                                        <input type="text" class="form-control" name="coupon_code" id="coupon_code" placeholder="Enter Coupon Code">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="coupon_type">Coupon Type</label><br>
+                                        <span><input type="radio" name="coupon_type" value="Multiple Times">&nbsp; Multiple Times
+                                            &nbsp; &nbsp;</span>
+                                        <span><input  type="radio" name="coupon_type" value="Single Times">&nbsp;Single Times &nbsp;
+                                            &nbsp; &nbsp;</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="amount_type">Amount Type</label><br>
+                                        <span><input type="radio" name="amount_type" value="Percentage">&nbsp; Percentage
+                                            &nbsp;(in %) &nbsp;</span>
+                                        <span><input  type="radio" name="amount_type" value="Fixed">&nbsp;Fixed &nbsp;
+                                            &nbsp;(in USD) &nbsp;</span>
+                                    </div>
+
+                                    <div class="form-group" >
+                                        <label for="amount">Amount</label>
+                                        <input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Amount">
+                                    </div>
+
                                     <div class="form-group" >
                                         <label for="coupon_code">Select Categories</label>
                                         <select name="categories[]"  class="form-control select2" multiple="">
@@ -91,6 +113,22 @@
                                                 @endforeach
                                             @endforeach
                                         </select>
+                                    </div>
+
+                                    <div class="form-group" >
+                                        <label for="users">Select Users</label>
+                                        <select name="users[]"  class="form-control select2" multiple="">
+                                            <option value="">Select</option>
+                                            @foreach( $users as $user)
+                                             <option value="{{$user['email']}}">{{$user['email']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="expiry_date">Expiry Date</label>
+                                        <input type="text" class="form-control"  name="expiry_date" id="expiry_date"
+                                        placeholder="Enter Expiry Date" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
                                     </div>
                                 </div>
                             </div>
