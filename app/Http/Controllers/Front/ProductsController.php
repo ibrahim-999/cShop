@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Cart;
 use App\Category;
+use App\Coupon;
 use App\ProductsAttribute;
 use http\Header;
 use Illuminate\Pagination\Paginator;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use PhpParser\Node\Scalar\String_;
 
 class ProductsController extends Controller
 {
@@ -265,6 +267,28 @@ class ProductsController extends Controller
                 'totalCartItems'=>$totalCartItems,
                 'view'=>(String)View::make('front.products.cart_items')
                 ->with(compact('userCartItems'))]);
+        }
+    }
+
+    public function appluCoupon(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = $request->all();
+            $userCartItems = Cart::userCartItems();
+            $totalCartItems = totalCartItems();
+            $couponCount = Coupon::where('coupon_code',$data['code'])->count();
+            if($couponCount==0)
+            {
+                return response()->json(['status'=>false,
+                    'message'=>"This coupon is not valid!",
+                    'totalCartItems'=>$totalCartItems,
+                    'view'=>(String)View::make('front.products.cart_items')
+                        ->with(compact('userCartItems'))]);
+            }else {
+                // Check for other coupon conditions
+
+            }
         }
     }
 }

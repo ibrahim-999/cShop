@@ -47,7 +47,7 @@
         <td> US.{{$total_price}}</td>
     </tr>
     <tr>
-        <td colspan="6" style="text-align:right">Voucher Discount:	</td>
+        <td colspan="6" style="text-align:right">Coupon Discount:	</td>
         <td> US.0.00</td>
     </tr>
     <tr>
