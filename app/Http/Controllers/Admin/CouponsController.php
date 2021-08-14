@@ -52,7 +52,60 @@ class CouponsController extends Controller
         if($request->isMethod('post'))
         {
             $data = $request->all();
-            dd($data); die;
+
+            $rules = [
+                'categories'=>'required',
+                'coupon_option'=>'required',
+                'coupon_type'=>'required',
+                'amount_type'=>'required',
+                'amount'=>'required|numeric',
+                'expiry_date'=>'required',
+
+            ];
+            $customMessages = [
+                'categories.required'=>'Select Category',
+                'coupon_option.required'=>'Select Coupon Option',
+                'coupon_type.required'=>'Select Coupon Type',
+                'amount_type.required'=>'Select Amount Type',
+                'amount_type.numeric'=>'Enter Valid Amount',
+                'expiry_date.required'=>'Enter Expiry Date',
+
+            ];
+            $this->validate($request,$rules,$customMessages);
+
+            if(isset($data['users']))
+            {
+                $users = implode(',',$data['users']);
+            }else {
+                $users="";
+            }
+
+            if(isset($data['categories']))
+            {
+                $categories = implode(',',$data['categories']);
+            }
+
+            if($data['coupon_option']=="Automatic")
+            {
+                $coupon_code = str_random(8);
+            }else {
+                $coupon_code = $data['coupon_code'];
+            }
+            $coupon->coupon_option = $data['coupon_option'];
+            $coupon->coupon_code = $coupon_code;
+            $coupon->categories = $categories;
+            $coupon->users = $users;
+            $coupon->coupon_type = $data['coupon_type'];
+            $coupon->amount_type = $data['amount_type'];
+            $coupon->amount = $data['amount'];
+            $coupon->expiry_date = $data['expiry_date'];
+
+            $coupon->status = 1;
+            $coupon->save();
+            session::flash('success_message',$message);
+            return redirect('admin/coupons');
+
+
         }
         // Sections with Categories and Subcategories
         $categories = Section::with('Categories')->get();

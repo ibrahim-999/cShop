@@ -62,7 +62,7 @@
                                                 @if($coupon['amount_type']=="Percentage")
                                                     %
                                                 @else
-                                                INR
+                                                USD
                                                 @endif
 
                                             </td>

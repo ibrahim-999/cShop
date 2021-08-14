@@ -63,7 +63,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="coupon_option">Coupon Option</label><br>
-                                        <span><input id="AutomaticCoupon" type="radio" name="coupon_option" value="Automatic">&nbsp; Automatic
+                                        <span><input id="AutomaticCoupon" type="radio" name="coupon_option" value="Automatic" checked="">&nbsp; Automatic
                                             &nbsp; &nbsp;</span>
                                         <span><input id="ManualCoupon" type="radio" name="coupon_option" value="Manual">&nbsp;Manual &nbsp;
                                             &nbsp; &nbsp;</span>
@@ -75,7 +75,7 @@
 
                                     <div class="form-group">
                                         <label for="coupon_type">Coupon Type</label><br>
-                                        <span><input type="radio" name="coupon_type" value="Multiple Times">&nbsp; Multiple Times
+                                        <span><input type="radio" name="coupon_type" value="Multiple Times"  checked="">&nbsp; Multiple Times
                                             &nbsp; &nbsp;</span>
                                         <span><input  type="radio" name="coupon_type" value="Single Times">&nbsp;Single Times &nbsp;
                                             &nbsp; &nbsp;</span>
@@ -83,7 +83,7 @@
 
                                     <div class="form-group">
                                         <label for="amount_type">Amount Type</label><br>
-                                        <span><input type="radio" name="amount_type" value="Percentage">&nbsp; Percentage
+                                        <span><input type="radio" name="amount_type" value="Percentage"  checked="">&nbsp; Percentage
                                             &nbsp;(in %) &nbsp;</span>
                                         <span><input  type="radio" name="amount_type" value="Fixed">&nbsp;Fixed &nbsp;
                                             &nbsp;(in USD) &nbsp;</span>
@@ -91,12 +91,12 @@
 
                                     <div class="form-group" >
                                         <label for="amount">Amount</label>
-                                        <input type="text" class="form-control" name="amount" id="amount" placeholder="Enter Amount">
+                                        <input type="number" class="form-control" name="amount" id="amount" placeholder="Enter Amount" required="">
                                     </div>
 
                                     <div class="form-group" >
                                         <label for="coupon_code">Select Categories</label>
-                                        <select name="categories[]"  class="form-control select2" multiple="">
+                                        <select name="categories[]"  class="form-control select2" multiple="" required="">
                                             <option value="">Select</option>
                                             @foreach( $categories as $section)
                                                 <optgroup label="{{$section['name']}}"></optgroup>
@@ -128,7 +128,7 @@
                                     <div class="form-group">
                                         <label for="expiry_date">Expiry Date</label>
                                         <input type="text" class="form-control"  name="expiry_date" id="expiry_date"
-                                        placeholder="Enter Expiry Date" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                                        placeholder="Enter Expiry Date" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask required="">
                                     </div>
                                 </div>
                             </div>
