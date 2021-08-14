@@ -6,6 +6,7 @@ use App\Coupon;
 use App\Http\Controllers\Controller;
 use App\Section;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -39,13 +40,17 @@ class CouponsController extends Controller
 
         if($id=="")
         {
-            $title = "Add Coupon";
             $coupon = new Coupon();
+            $selCats = array();
+            $selUsers = array();
+            $title = "Add Coupon";
             $message = "Coupon has been added successfully!";
         }
         else {
-            $title = "Edit Coupon";
             $coupon = Coupon::find($id);
+            $title = "Edit Coupon";
+            $selCats = explode(',', $coupon['categories']);
+            $selUsers = explode(',' , $coupon['users']);
             $message= "Coupon has been updated successfully!";
         }
 
@@ -114,6 +119,21 @@ class CouponsController extends Controller
         //Users
         $users = User::select('email')->where('status',1)->get()->toArray();
 
-        return view('admin.coupons.add_edit_coupon')->with(compact('title','coupon','categories','users'));
+        return view('admin.coupons.add_edit_coupon')->with(compact('title',
+            'coupon',
+                      'categories',
+                      'users',
+                      'selCats',
+                      'selUsers'));
+    }
+
+
+    public function deleteCoupon($id)
+    {
+        //Delete Coupon
+        Coupon::where('id',$id)->delete();
+        $message = 'Coupon has been deleted!';
+        session()->flash('success_message',$message);
+        return redirect()->back();
     }
 }
