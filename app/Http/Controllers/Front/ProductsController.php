@@ -147,6 +147,11 @@ class ProductsController extends Controller
         {
             $data = $request->all();
 
+            if($data['quantity']<=0 || $data['quantity']="")
+            {
+                $data['quantity']=1;
+            }
+
             //Check Product Stock is available or not
             $getProductStock = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$data['size']])
                 ->first()->toArray();
@@ -192,9 +197,9 @@ class ProductsController extends Controller
             }
             //Save Product in Cart
             //Cart::insert(['session_id'=>$session_id,'product_id'=>$data['product_id'],'size'=>$data['size'],'quantity'=>$data['quantity']]);
-            $cart = new Cart();
+            $cart = new Cart;
             $cart->session_id = $session_id;
-            $cart->user_id = 'user_id';
+            $cart->user_id = $user_id;
             $cart->product_id = $data['product_id'];
             $cart->size = $data['size'];
             $cart->quantity = $data['quantity'];

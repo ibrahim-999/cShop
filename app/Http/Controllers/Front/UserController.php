@@ -95,7 +95,7 @@ class UserController extends Controller
 
     public function loginUser(Request $request)
     {
-        if($request->method('post'))
+        if($request->isMethod('post'))
         {
             Session::forget('error_message');
             Session::forget('success_message');
@@ -315,6 +315,7 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
+        Session::flush();
         return redirect('/');
     }
 }
