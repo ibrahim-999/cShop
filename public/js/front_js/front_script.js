@@ -388,12 +388,14 @@ $(document).ready(function (){
               data: {code: code},
               url: '/apply-coupon',
               success:function (resp){
-                if(resp.message!= "")
+                if(resp.message!== "")
                 {
                     alert(resp.message);
                 }
                   $(".totalCartItems").html(resp.totalCartItems);
                   $("#AppendCartItems").html(resp.view);
+                  $(".couponAmount").text("USD."+resp.couponAmount);
+                  $(".grand_total").text("USD."+resp.grand_total);
               },error:function(){
                   alert("Error");
                }

@@ -36,9 +36,9 @@
                     </button>
                 </div>
             </td>
-            <td>US.{{$attrPrice['product_price']}}</td>
-            <td>US.{{$attrPrice['discount']}}</td>
-            <td>US.{{$attrPrice['final_price'] * $item['quantity']}}</td>
+            <td>USD.{{$attrPrice['product_price']}}</td>
+            <td>USD.{{$attrPrice['discount']}}</td>
+            <td>USD.{{$attrPrice['final_price'] * $item['quantity']}}</td>
         </tr>
         <?php $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']); ?>
     @endforeach
@@ -48,11 +48,18 @@
     </tr>
     <tr>
         <td colspan="6" style="text-align:right">Coupon Discount:	</td>
-        <td> US.0.00</td>
+        <td>
+            @if(Session::has('couponAmount'))
+              -  USD. {{Session::get('couponAmount')}}
+            @else
+                USD. 0
+            @endif
+
+        </td>
     </tr>
     <tr>
-        <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (US.{{$total_price}} - US.0) =</strong></td>
-        <td class="label label-important" style="display:block"> <strong> US.{{$total_price}}</strong></td>
+        <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (USD.{{$total_price}} - <span class="couponAmount">USD.0</span>) =</strong></td>
+        <td class="label label-important" style="display:block"> <strong class="grand_total"> USD.{{$total_price - Session::get('couponAmount')}}</strong></td>
     </tr>
     </tbody>
 </table>
