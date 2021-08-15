@@ -394,8 +394,19 @@ $(document).ready(function (){
                 }
                   $(".totalCartItems").html(resp.totalCartItems);
                   $("#AppendCartItems").html(resp.view);
-                  $(".couponAmount").text("USD."+resp.couponAmount);
-                  $(".grand_total").text("USD."+resp.grand_total);
+                  if(resp.couponAmount>=0)
+                  {
+                      $(".couponAmount").text("USD."+resp.couponAmount);
+                  }
+                  else
+                  {
+                      $(".couponAmount").text("USD.0");
+                  }
+                  if(resp.grand_total>=0)
+                  {
+                      $(".grand_total").text("USD."+resp.grand_total);
+                  }
+
               },error:function(){
                   alert("Error");
                }

@@ -321,13 +321,17 @@ class ProductsController extends Controller
                 $userCartItems = Cart::userCartItems();
 
                 //Check if coupon is belong to the logged users
-                //Get all selected users from coupon
-                $usersArr = explode(',',$couponDetails->users);
-                //Get user ID's of all selected users
-                foreach ($usersArr as $key =>$user)
+                //Get all selected users of coupon
+
+                if(!empty($couponDetails->users))
                 {
-                    $getUserId = User::select('id')->where('email',$user)->first()->toArray();
-                    $userID[] = $getUserId['id'];
+                    $usersArr = explode(',',$couponDetails->users);
+                    //Get user ID's of all selected users
+                    foreach ($usersArr as $key =>$user)
+                    {
+                        $getUserId = User::select('id')->where('email',$user)->first()->toArray();
+                        $userID[] = $getUserId['id'];
+                    }
                 }
 
                 //Get Cart Total Amount
@@ -342,9 +346,12 @@ class ProductsController extends Controller
                     {
                         $message = "This coupon code is not for one of the selected products!";
                     }
-                    if(!in_array($item['user_id'],$userID))
+                    if(!empty($couponDetails->users))
                     {
-                        $message = "This coupon code is not for you!";
+                        if(!in_array($item['user_id'],$userID))
+                        {
+                            $message = "This coupon code is not for you!";
+                        }
                     }
 
                     $attrPrice = Product::getDiscountedAttrPrice($item['product_id'],$item['size']);

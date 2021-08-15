@@ -149,6 +149,9 @@ Route::namespace('Front')->group(function (){
 
         // Apply Coupon
         Route::post('/apply-coupon','ProductsController@appluCoupon');
+
+        //  Checkout
+        Route::match(['get','post'],'/checkout','ProductsController@checkout');
     });
 
 });

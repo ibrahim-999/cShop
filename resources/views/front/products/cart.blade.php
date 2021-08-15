@@ -3,10 +3,10 @@
 @section('content')
     <div class="span9">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+            <li><a href="{{url('/')}}">Home</a> <span class="divider">/</span></li>
             <li class="active"> SHOPPING CART</li>
         </ul>
-        <h3>  SHOPPING CART [ <small><span class="totalCartItems">{{totalCartItems()}}</span> Item(s) </small>]<a href="{{url('/cart')}}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
+        <h3>  SHOPPING CART [ <small><span class="totalCartItems">{{totalCartItems()}}</span> Item(s) </small>]<a href="{{url('/')}}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
         <hr class="soft"/>
 
         @if(Session::has('success_message'))
@@ -76,8 +76,8 @@
           </td>
           </tr>
         </table> -->
-        <a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-        <a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+        <a href="{{url('/')}}" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+        <a href="{{url('checkout')}}" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
 
     </div>
 @endsection
