@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Cart;
 use App\Category;
 use App\Coupon;
+use App\DeliveryAddress;
 use App\ProductsAttribute;
 use App\User;
 use http\Header;
@@ -401,5 +402,12 @@ class ProductsController extends Controller
 
             }
         }
+    }
+
+    public function checkout()
+    {
+        $userCartItems = Cart::userCartItems();
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        return view('front.products.checkout')->with(compact('userCartItems','deliveryAddresses'));
     }
 }
