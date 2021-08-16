@@ -426,6 +426,8 @@ class ProductsController extends Controller
         else {
             // Edit delivery address
             $title = "Edit Delivery Address";
+            $address = DeliveryAddress::find($id);
+            $message = "Delivery address updated successfully!";
         }
         if($request->isMethod('post'))
         {
@@ -460,6 +462,14 @@ class ProductsController extends Controller
         }
         $countries = Country::where('status',1)->get()->toArray();
         return view('front.products.add_edit_delivery_address')
-            ->with(compact('countries','title'));
+            ->with(compact('countries','title','address'));
+    }
+
+    public function deleteDeliveryAddress($id)
+    {
+        DeliveryAddress::where('id',$id)->delete();
+        $message = "Delivery address deleted successfully!";
+        Session::put('success_message',$message);
+        return redirect()->back();
     }
 }

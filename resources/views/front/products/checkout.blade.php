@@ -35,14 +35,17 @@
             @foreach($deliveryAddresses as $address)
             <tr>
                 <td>
-                        <div class="control-group" style="float: left; margin-top: -2px; margin-right: 5px;">
-                                <input type="radio" id="address{{$address['id']}}" name="address_id" value="{{$address['id']}}"/>
-                        </div>
+                    <div class="control-group" style="float: left; margin-top: -2px; margin-right: 5px;">
+                        <input type="radio" id="address{{$address['id']}}" name="address_id" value="{{$address['id']}}"/>
+                    </div>
                         <div class="control-group">
                             <label class="control-label">{{$address['name']}},{{$address['address']}},
-                                {{$address['city']}},{{$address['state']}},{{$address['country']}}
+                                {{$address['city']}},{{$address['country']}}.<span style="float: right"> P:{{$address['mobile']}}</span>
                             </label>
                         </div>
+                </td>
+                <td>
+                    <a href="{{url('/add-edit-delivery-address/'.$address['id'])}}">Edit</a> | <a href="{{url('/delete-delivery-address/'.$address['id'])}}" class="addressDelete">Delete</a>
                 </td>
             </tr>
             @endforeach

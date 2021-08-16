@@ -155,6 +155,9 @@ Route::namespace('Front')->group(function (){
 
         // Add/Edit DeliveryAddress
         Route::match(['get','post'],'/add-edit-delivery-address/{id?}','ProductsController@addEditDeliveryAddress');
+
+        // Delete DeliveryAddress
+        Route::get('/delete-delivery-address/{id}','ProductsController@deleteDeliveryAddress');
     });
 
 });

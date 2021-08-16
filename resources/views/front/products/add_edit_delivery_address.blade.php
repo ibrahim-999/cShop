@@ -39,19 +39,21 @@
             <div class="span4">
                 <div class="well">
                     Enter your delivery address details.<br/><br/>
-                    <form id="deliveryAddressForm" action="{{url('/add-edit-delivery-address')}}" method="post">@csrf
+                    <form id="deliveryAddressForm" @if(empty($address['id'])) action="{{url('/add-edit-delivery-address')}}"
+                          @else action="{{url('/add-edit-delivery-address/'.$address['id'])}}@endif"
+                          method="post">@csrf
                         <div class="control-group">
                             <label class="control-label" for="name">Name</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="name" id="name"
-                                       placeholder="Enter Name" required="">
+                                       placeholder="Enter Name" value="{{$address['name']}}" required="">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="address">Address</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="address" id="address"
-                                       placeholder="Enter Address" >
+                                       placeholder="Enter Address"  value="{{$address['address']}}" >
                             </div>
                         </div>
 
@@ -59,7 +61,7 @@
                             <label class="control-label" for="postalcode">Postal Code</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="postcode" id="postcode"
-                                       placeholder="Enter Postal Code" >
+                                       placeholder="Enter Postal Code"  value="{{$address['postcode']}}">
                             </div>
                         </div>
 
@@ -67,7 +69,7 @@
                             <label class="control-label" for="city">City</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="city" id="city"
-                                       placeholder="Enter City" >
+                                       placeholder="Enter City"  value="{{$address['city']}}">
                             </div>
                         </div>
                         <div class="control-group">
@@ -76,7 +78,7 @@
                                 <select class="span3" id="country" name="country">
                                     <option value="">Select Country</option>
                                     @foreach($countries as $country)
-                                        <option value="{{$country['country_name']}}">
+                                        <option value="{{$country['country_name']}}" @if($country['country_name']==$address['country']) selected="" @endif>
                                             {{$country['country_name']}}
                                         </option>
                                     @endforeach
@@ -88,11 +90,11 @@
                             <label class="control-label" for="mobile">Mobile</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="mobile" id="mobile"
-                                       placeholder="Enter Mobile"  >
+                                       placeholder="Enter Mobile"   value="{{$address['mobile']}}">
                             </div>
                         </div>
                         <div class="controls">
-                            <button type="submit" class="btn block">Update</button>
+                            <button type="submit" class="btn block">Submit</button>
                             <a style="float: right" class="btn block" href="{{url('checkout')}}">Back</a>
                         </div>
                     </form>
