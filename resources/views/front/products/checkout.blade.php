@@ -17,6 +17,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <?php Session::forget('success_message'); ?>
         @endif
         @if(Session::has('error_message'))
             <div class="alert alert-danger " role="alert">
@@ -25,10 +26,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <?php Session::forget('error_message'); ?>
         @endif
 
         <table class="table table-bordered">
-            <tr><th> DELIVERY ADDRESSES  </th></tr>
+            <tr><td><strong> DELIVERY ADDRESSES  </strong> |
+                    <a href="{{url('add-edit-delivery-address')}}">Add</a></td></tr>
             @foreach($deliveryAddresses as $address)
             <tr>
                 <td>

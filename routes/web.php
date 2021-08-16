@@ -152,6 +152,9 @@ Route::namespace('Front')->group(function (){
 
         //  Checkout
         Route::match(['get','post'],'/checkout','ProductsController@checkout');
+
+        // Add/Edit DeliveryAddress
+        Route::match(['get','post'],'/add-edit-delivery-address/{id?}','ProductsController@addEditDeliveryAddress');
     });
 
 });

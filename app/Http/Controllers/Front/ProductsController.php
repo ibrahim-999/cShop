@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Cart;
 use App\Category;
+use App\Country;
 use App\Coupon;
 use App\DeliveryAddress;
 use App\ProductsAttribute;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use PhpParser\Node\Scalar\String_;
+use PHPUnit\Framework\Constraint\Count;
 
 class ProductsController extends Controller
 {
@@ -409,5 +411,55 @@ class ProductsController extends Controller
         $userCartItems = Cart::userCartItems();
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         return view('front.products.checkout')->with(compact('userCartItems','deliveryAddresses'));
+    }
+
+    public function addEditDeliveryAddress(Request $request, $id = null)
+    {
+        if($id=="")
+        {
+            // Add delivery address
+            $title = "Add Delivery Address";
+            $address = new DeliveryAddress;
+            $message = "Delivery address added successfully!";
+
+        }
+        else {
+            // Edit delivery address
+            $title = "Edit Delivery Address";
+        }
+        if($request->isMethod('post'))
+        {
+            $data = $request->all();
+
+            Session::forget('error_message');
+            Session::forget('success_message');
+
+            $rules = [
+                'name'=>'required|regex:/^[\pL\s\-]+$/u',
+                'mobile'=>'required|numeric'
+            ];
+
+            $customRules = [
+                'name.required'=>'Name is required',
+                'name.regex'=>'Valid name is required',
+                'mobile.required'=>'Mobile is required'
+            ];
+
+            $this->validate($request,$rules,$customRules);
+            $address->user_id = Auth::user()->id;
+            $address->name = $data['name'];
+            $address->address = $data['address'];
+            $address->city = $data['city'];
+            $address->country = $data['country'];
+            $address->postcode = $data['postcode'];
+            $address->mobile = $data['mobile'];
+            $address->save();
+            Session::put('success_message',$message);
+            return redirect('/checkout');
+
+        }
+        $countries = Country::where('status',1)->get()->toArray();
+        return view('front.products.add_edit_delivery_address')
+            ->with(compact('countries','title'));
     }
 }
