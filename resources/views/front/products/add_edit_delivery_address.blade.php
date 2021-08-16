@@ -40,20 +40,22 @@
                 <div class="well">
                     Enter your delivery address details.<br/><br/>
                     <form id="deliveryAddressForm" @if(empty($address['id'])) action="{{url('/add-edit-delivery-address')}}"
-                          @else action="{{url('/add-edit-delivery-address/'.$address['id'])}}@endif"
+                          @else action="{{url('/add-edit-delivery-address/'.$address['id'])}}"@endif
                           method="post">@csrf
                         <div class="control-group">
                             <label class="control-label" for="name">Name</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="name" id="name"
-                                       placeholder="Enter Name" value="{{$address['name']}}" required="">
+                                       placeholder="Enter Name" @if(isset($address['name'])) value="{{$address['name']}}"
+                                       @else value="{{old('name')}}" @endif required="">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="address">Address</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="address" id="address"
-                                       placeholder="Enter Address"  value="{{$address['address']}}" >
+                                       placeholder="Enter Address"  @if(isset($address['address'])) value="{{$address['address']}}"
+                                       @else value="{{old('address')}}"@endif >
                             </div>
                         </div>
 
@@ -61,7 +63,8 @@
                             <label class="control-label" for="postalcode">Postal Code</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="postcode" id="postcode"
-                                       placeholder="Enter Postal Code"  value="{{$address['postcode']}}">
+                                       placeholder="Enter Postal Code"  @if(isset($address['postcode'])) value="{{$address['postcode']}}"
+                                       @else value="{{old('postcode')}}"@endif>
                             </div>
                         </div>
 
@@ -69,7 +72,8 @@
                             <label class="control-label" for="city">City</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="city" id="city"
-                                       placeholder="Enter City"  value="{{$address['city']}}">
+                                       placeholder="Enter City"   @if(isset($address['city'])) value="{{$address['city']}}"
+                                       @else value="{{old('city')}}" @endif>
                             </div>
                         </div>
                         <div class="control-group">
@@ -78,7 +82,9 @@
                                 <select class="span3" id="country" name="country">
                                     <option value="">Select Country</option>
                                     @foreach($countries as $country)
-                                        <option value="{{$country['country_name']}}" @if($country['country_name']==$address['country']) selected="" @endif>
+                                        <option value="{{$country['country_name']}}"
+                                                @if($country['country_name']==$address['country']) selected=""
+                                                @elseif($country['country_name']==old('country')) selected="" @endif>
                                             {{$country['country_name']}}
                                         </option>
                                     @endforeach
@@ -90,7 +96,8 @@
                             <label class="control-label" for="mobile">Mobile</label>
                             <div class="controls">
                                 <input class="span3"  type="text" name="mobile" id="mobile"
-                                       placeholder="Enter Mobile"   value="{{$address['mobile']}}">
+                                       placeholder="Enter Mobile"   @if(isset($address['mobile'])) value="{{$address['mobile']}}"
+                                       @else value="{{old('mobile')}} @endif">
                             </div>
                         </div>
                         <div class="controls">

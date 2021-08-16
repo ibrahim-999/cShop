@@ -39,8 +39,9 @@
                         <input type="radio" id="address{{$address['id']}}" name="address_id" value="{{$address['id']}}"/>
                     </div>
                         <div class="control-group">
-                            <label class="control-label">{{$address['name']}},{{$address['address']}},
-                                {{$address['city']}},{{$address['country']}}.<span style="float: right"> P:{{$address['mobile']}}</span>
+                            <label class="control-label">
+                                {{$address['name']}},&nbsp;{{$address['address']}},&nbsp;{{$address['city']}},&nbsp;{{$address['country']}} .
+                                <span style="float: right"> Phone Number : {{$address['mobile']}}</span>
                             </label>
                         </div>
                 </td>

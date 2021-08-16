@@ -438,13 +438,25 @@ class ProductsController extends Controller
 
             $rules = [
                 'name'=>'required|regex:/^[\pL\s\-]+$/u',
-                'mobile'=>'required|numeric'
+                'address'=>'required',
+                'city'=>'required|regex:/^[\pL\s\-]+$/u',
+                'country'=>'required',
+                'postcode'=>'required|numeric|digits:5',
+                'mobile'=>'required|string|digits:11'
             ];
 
             $customRules = [
                 'name.required'=>'Name is required',
-                'name.regex'=>'Valid name is required',
-                'mobile.required'=>'Mobile is required'
+                'name.regex'=>'Valid Name is required',
+                'address.required'=>'Address is required',
+                'city.required'=>'City Name is required',
+                'city.regex'=>'Valid City Name is required',
+                'country.required'=>'Country Name is required',
+                'postcode.required'=>'Postcode is required',
+                'postcode.numeric'=>'Valid Postcode is required',
+                'postcode.digits'=>'Postcode must be at least 5 digits',
+                'mobile.required'=>'Mobile is required',
+                'mobile.digits'=>'Phone must be at least 11 numbers',
             ];
 
             $this->validate($request,$rules,$customRules);
