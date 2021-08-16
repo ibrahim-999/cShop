@@ -29,6 +29,8 @@
             <?php Session::forget('error_message'); ?>
         @endif
 
+        <form name="checkoutForm" id="checkoutForm" action="{{url('/checkout')}}" method="post">@csrf
+
         <table class="table table-bordered">
             <tr><td><strong> DELIVERY ADDRESSES  </strong> |
                     <a href="{{url('add-edit-delivery-address')}}">Add</a></td></tr>
@@ -98,7 +100,11 @@
             </tr>
             <tr>
                 <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (USD.{{$total_price}} - <span class="couponAmount">USD.0</span>) =</strong></td>
-                <td class="label label-important" style="display:block"> <strong class="grand_total"> USD.{{$total_price - Session::get('couponAmount')}}</strong></td>
+                <td class="label label-important" style="display:block">
+                    <strong class="grand_total">
+                        USD.{{$grand_total = $total_price - Session::get('couponAmount')}}
+                        <?php Session::put('grand_total',$grand_total); ?>
+                    </strong></td>
             </tr>
             </tbody>
         </table>
@@ -107,15 +113,13 @@
             <tbody>
             <tr>
                 <td>
-                    <form id="ApplyCoupon" method="post" action="javascript:void(0);" class="form-horizontal"
-                          @if(Auth::check()) user="1" @endif > @csrf
-                        <div class="control-group">
+                        <div class="control-group" >
                             <label class="control-label"><strong> PAYMENT METHODS: </strong> </label>
                             <div class="controls">
-
+                                <input type="radio" name="payment_method" id="COD" value="COD"><strong>Cash on Delivery</strong>&nbsp;&nbsp;
+                                <input type="radio" name="payment_method" id="Paypal" value="Paypal"><strong>Paypal</strong>
                             </div>
                         </div>
-                    </form>
                 </td>
             </tr>
 
@@ -149,7 +153,7 @@
           </tr>
         </table> -->
         <a href="{{url('/cart')}}" class="btn btn-large"><i class="icon-arrow-left"></i> Back to Cart </a>
-        <a href="{{url('checkout')}}" class="btn btn-large pull-right">Place Order <i class="icon-arrow-right"></i></a>
-
+        <button type="submit" class="btn btn-large pull-right">Place Order <i class="icon-arrow-right"></i></button>
+        </form>
     </div>
 @endsection
