@@ -7,6 +7,9 @@ use App\Category;
 use App\Country;
 use App\Coupon;
 use App\DeliveryAddress;
+use App\Order;
+use App\OrderProduct;
+use App\OrdersProduct;
 use App\ProductsAttribute;
 use App\User;
 use http\Header;
@@ -20,6 +23,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use PhpParser\Node\Scalar\String_;
 use PHPUnit\Framework\Constraint\Count;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -417,12 +421,74 @@ class ProductsController extends Controller
                session::flash('error_message',$message);
                return redirect()->back();
            }
-            if(empty($data['payment_method']))
+            if(empty($data['payment_gateway']))
             {
-                $message = "Please select Payment Method!";
+                $message = "Please select Payment Gateway!";
                 session::flash('error_message',$message);
                 return redirect()->back();
             }
+            if($data['payment_gateway']=="COD")
+            {
+                $payment_method = "COD";
+            }else {
+                $payment_method = "Prepaid";
+            }
+
+            //Get Delivery Address from address_id
+            $deliveryAddress = DeliveryAddress::where('id',$data['address_id'])->first()->toArray();
+
+            DB::beginTransaction();
+
+            //Insert Order Details
+
+            $order = new Order;
+            $order->user_id = Auth::user()->id;
+            $order->name = $deliveryAddress['name'];
+            $order->address = $deliveryAddress['address'];
+            $order->city = $deliveryAddress['city'];
+            $order->state = $deliveryAddress['state'];
+            $order->country = $deliveryAddress['country'];
+            $order->mobile = $deliveryAddress['mobile'];
+            $order->email = Auth::user()->email;
+            $order->postcode = $deliveryAddress['postcode'];
+            $order->shipping_charges = 0;
+            $order->coupon_code = Session::get('couponCode');
+            $order->coupon_amount = Session::get('couponAmount');
+            $order->order_status  = "New";
+            $order->payment_method = $payment_method;
+            $order->payment_gateway = $data['payment_gateway'];
+            $order->grand_total = Session::get('grand_total');
+            $order->save();
+
+            //Get last inserted order id
+            $order_id = DB::getPdo()->lastInsertId();
+            //Get user cart item
+            $cartItems = Cart::where('user_id',Auth::user()->id)->get()->toArray();
+            foreach ($cartItems as $key => $item)
+            {
+                $cartItem = new OrdersProduct;
+                $cartItem->order_id = $order_id;
+                $cartItem->user_id = Auth::user()->id;
+
+                $getProductsDetails = Product::select('product_code','product_name','product_color')->
+                where('id',$item['product_id'])->
+                first()->toArray();
+                $cartItem->product_id = $item['product_id'];
+                $cartItem->product_code = $getProductsDetails['product_code'];
+                $cartItem->product_name = $getProductsDetails['product_name'];
+                $cartItem->product_color = $getProductsDetails['product_color'];
+                $cartItem->product_size = $item['size'];
+                $getDiscountedAttrPrice  = Product::getDiscountedAttrPrice($item['product_id'],$item['size']);
+                $cartItem->product_price = $getDiscountedAttrPrice['final_price'];
+                $cartItem->product_qty = $item['quantity'];
+                $cartItem->save();
+            }
+
+            Cart::where('user_id',Auth::user()->id)->delete();
+
+            DB::commit();
+            echo "Order Placed"; die;
+
         }
         $userCartItems = Cart::userCartItems();
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();

@@ -116,8 +116,8 @@
                         <div class="control-group" >
                             <label class="control-label"><strong> PAYMENT METHODS: </strong> </label>
                             <div class="controls">
-                                <input type="radio" name="payment_method" id="COD" value="COD"><strong>Cash on Delivery</strong>&nbsp;&nbsp;
-                                <input type="radio" name="payment_method" id="Paypal" value="Paypal"><strong>Paypal</strong>
+                                <input type="radio" name="payment_gateway" id="COD" value="COD"><strong>Cash on Delivery</strong>&nbsp;&nbsp;
+                                <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong>
                             </div>
                         </div>
                 </td>
