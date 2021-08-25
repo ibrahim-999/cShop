@@ -141,6 +141,9 @@ Route::namespace('Front')->group(function (){
         // My Account Page
         Route::match(['get','post'],'/account','UserController@myAccount');
 
+        // My Orders Page
+        Route::get('/orders','OrdersController@orders');
+
         //Check User Password
         Route::post('/check-user-pwd','UserController@chkUserPassword');
 
