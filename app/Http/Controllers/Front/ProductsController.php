@@ -431,6 +431,7 @@ class ProductsController extends Controller
             {
                 $payment_method = "COD";
             }else {
+                echo "Coming Soon";
                 $payment_method = "Prepaid";
             }
 
@@ -486,13 +487,35 @@ class ProductsController extends Controller
 
             Cart::where('user_id',Auth::user()->id)->delete();
 
+            //Insert Order id in Session varliable
+            Session::put('order_id',$order_id);
+
             DB::commit();
+
+            if($data['payment_gateway']=="COD")
+            {
+                return redirect('/thanks');
+            }else {
+                echo "Prepaid methods coming soon";
+            }
+
             echo "Order Placed"; die;
 
         }
         $userCartItems = Cart::userCartItems();
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         return view('front.products.checkout')->with(compact('userCartItems','deliveryAddresses'));
+    }
+
+    public function thanks()
+    {
+        if(Session::has('order_id')){
+            // Empty User Cart
+            Cart::where('user_id',Auth::user()->id)->delete();
+            return view('front.products.thanks');
+        }else {
+            return redirect('/cart');
+        }
     }
 
     public function addEditDeliveryAddress(Request $request, $id = null)
