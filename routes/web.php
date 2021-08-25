@@ -144,6 +144,9 @@ Route::namespace('Front')->group(function (){
         // My Orders Page
         Route::get('/orders','OrdersController@orders');
 
+        //Order Details
+        Route::get('/orders/{id}','OrdersController@orderDetails');
+
         //Check User Password
         Route::post('/check-user-pwd','UserController@chkUserPassword');
 
